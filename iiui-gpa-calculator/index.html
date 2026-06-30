@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IIUI GPA Calculator | Semester GPA and CGPA Tool</title>
+    <meta name="description" content="Estimate IIUI semester GPA and CGPA with the real grading scale, grade points, and credit hours. Unofficial calculator for Pakistan students.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="IIUI GPA Calculator">
+    <meta property="og:description" content="Estimate IIUI semester GPA and CGPA with the real grading scale, grade points, and credit hours. Unofficial calculator for Pakistan students.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pakgpacalculator.netlify.app/iiui-gpa-calculator/">
+    <meta property="og:image" content="https://pakgpacalculator.netlify.app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="IIUI GPA Calculator">
+    <meta name="twitter:description" content="Estimate IIUI semester GPA and CGPA with the real grading scale, grade points, and credit hours. Unofficial calculator for Pakistan students.">
+    <meta name="twitter:image" content="https://pakgpacalculator.netlify.app/og-image.png">
+    <link rel="canonical" href="https://pakgpacalculator.netlify.app/iiui-gpa-calculator/">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7400673079827279"
+     crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+      (function () {
+        try {
+          var storedTheme = localStorage.getItem("gpa-theme");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme = storedTheme || (prefersDark ? "dark" : "light");
+        } catch (error) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"WebApplication","name":"IIUI GPA Calculator","applicationCategory":"EducationalApplication","operatingSystem":"Any","description":"Estimate IIUI semester GPA and CGPA with the real grading scale, grade points, and credit hours. Unofficial calculator for Pakistan students.","url":"https://pakgpacalculator.netlify.app/iiui-gpa-calculator/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+    </script>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this the official IIUI calculator?","acceptedAnswer":{"@type":"Answer","text":"No. It is an independent student tool and is not affiliated with International Islamic University Islamabad."}},{"@type":"Question","name":"Does IIUI use minus grades?","acceptedAnswer":{"@type":"Answer","text":"No. IIUI uses a half-point scale (A, B+, B, C+, C, D+, D, F) with no minus grades, so keep the Pakistan no-minus scale selected."}},{"@type":"Question","name":"What is the passing grade at IIUI?","acceptedAnswer":{"@type":"Answer","text":"D (1.0 grade points), which requires at least 50% marks. Below 50% is an F and the course must be retaken."}},{"@type":"Question","name":"Is IIUI grading absolute or relative?","acceptedAnswer":{"@type":"Answer","text":"IIUI uses absolute grading, so your grade depends on your own marks rather than the class average."}},{"@type":"Question","name":"What CGPA do I need for the Dean's Honor List?","acceptedAnswer":{"@type":"Answer","text":"Around 3.52 or above. Always confirm the current threshold with your faculty office."}}]}
+    </script>
+  </head>
+  <body data-page-type="university" data-page-slug="iiui-gpa-calculator">
+    <a class="skip-link" href="#calculator">Skip to main content</a>
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Main navigation">
+        <a class="brand" href="../index.html" aria-label="GPA Calculator Pakistan home">
+          <span class="brand-mark" aria-hidden="true">4.0</span>
+          <span>GPA Calculator Pakistan</span>
+        </a>
+        <button class="nav-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-actions" id="primary-nav">
+          <div class="nav-links">
+            <a href="../index.html#calculator">Calculator</a>
+            <a href="../index.html#tools">Tools</a>
+            <a href="../index.html#universities">Universities</a>
+            <a href="../index.html#guide">Guide</a>
+            <a href="../about.html">About</a>
+            <a href="../contact.html">Contact</a>
+            <a href="../privacy.html">Privacy</a>
+          </div>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme">
+            <span class="theme-toggle__icon" aria-hidden="true">D</span>
+            <span class="theme-toggle__label">Dark</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero-band" aria-labelledby="page-title" data-animate>
+        <div class="hero-copy">
+          <p class="eyebrow">University calculator</p>
+          <h1 id="page-title">IIUI GPA Calculator</h1>
+          <p>Use this unofficial IIUI GPA calculator to estimate your semester GPA and updated CGPA using IIUI's grading scale and your credit hours.</p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <button class="button button-primary" type="button" id="hero-sample"><span aria-hidden="true">+</span>Load sample</button>
+            <a class="button button-ghost" href="#guide-title">Read guide</a>
+          </div>
+        </div>
+        <aside class="quick-stats" aria-label="Page highlights">
+          <div><strong>4.0</strong><span>scale focus</span></div>
+          <div><strong>30</strong><span>course rows</span></div>
+          <div><strong>Free</strong><span>student tool</span></div>
+        </aside>
+      </section>
+      <section class="calculator-section" id="calculator" aria-labelledby="calculator-title" data-animate>
+        <div class="section-heading">
+          <p class="eyebrow">Start calculating</p>
+          <h2 id="calculator-title">IIUI GPA and CGPA estimate</h2>
+          <p>Enter your IIUI courses, grades, and credit hours. The scale below is preset to match IIUI; the result is only an estimate, and your official transcript is final.</p>
+        </div>
+        <form class="calculator-shell" id="gpa-form" novalidate data-animate data-default-scale="pakistan">
+          <div class="toolbar">
+            <div>
+              <label for="scale-select">Grade scale</label>
+              <select id="scale-select" name="scale">
+                <option value="pakistan">Pakistan 4.0 scale (no minus grades)</option>
+                <option value="hec">HEC 4.0 scale (with minus grades)</option>
+              </select>
+            </div>
+            <div class="toolbar-actions">
+              <button class="button button-secondary" type="button" id="fill-sample"><span aria-hidden="true">+</span>Sample</button>
+              <button class="button button-secondary" type="button" id="reset-form"><span aria-hidden="true">x</span>Reset</button>
+              <button class="button button-secondary" type="button" id="print-result"><span aria-hidden="true">p</span>Print</button>
+            </div>
+          </div>
+          <div class="calculator-grid">
+            <div class="entry-panel">
+              <div class="previous-grid">
+                <div>
+                  <label for="previous-cgpa">Previous CGPA</label>
+                  <input id="previous-cgpa" name="previousCgpa" type="number" min="0" max="4" step="0.01" inputmode="decimal" placeholder="3.20">
+                </div>
+                <div>
+                  <label for="completed-credits">Completed credit hours</label>
+                  <input id="completed-credits" name="completedCredits" type="number" min="0" step="1" inputmode="numeric" placeholder="60" aria-describedby="completed-help">
+                  <small id="completed-help">Credits completed before this semester.</small>
+                </div>
+              </div>
+              <div class="course-table-wrap">
+                <table class="course-table">
+                  <caption>Current semester courses</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">No.</th>
+                      <th scope="col">Subject</th>
+                      <th scope="col">Grade</th>
+                      <th scope="col">Credits</th>
+                      <th scope="col">Points</th>
+                      <th scope="col"><span class="sr-only">Actions</span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="course-rows"></tbody>
+                </table>
+              </div>
+              <div class="table-actions">
+                <button class="button button-secondary" type="button" id="add-row"><span aria-hidden="true">+</span>Add course</button>
+                <p id="row-counter" aria-live="polite">8 of 30 rows</p>
+              </div>
+            </div>
+            <aside class="result-panel" aria-labelledby="results-title">
+              <p class="eyebrow">Live result</p>
+              <h3 id="results-title">Your GPA summary</h3>
+              <div class="score-pair">
+                <div><span>Semester GPA</span><strong id="semester-gpa">0.00</strong></div>
+                <div><span>Updated CGPA</span><strong id="updated-cgpa">0.00</strong></div>
+              </div>
+              <dl class="result-list">
+                <div><dt>Semester credits</dt><dd id="semester-credits">0</dd></div>
+                <div><dt>Grade points</dt><dd id="total-points">0.00</dd></div>
+                <div><dt>Courses counted</dt><dd id="courses-counted">0</dd></div>
+                <div><dt>Standing</dt><dd id="standing">Add courses</dd></div>
+              </dl>
+              <div class="formula-box">
+                <strong>CGPA formula</strong>
+                <p>((previous CGPA x completed credits) + current points) / total credits</p>
+              </div>
+              <p class="status-message" id="status-message" role="status" aria-live="polite">Select grades and credit hours to calculate your GPA.</p>
+            </aside>
+          </div>
+        </form>
+        <div class="ad-slot ad-slot-top" aria-label="Advertisement placeholder">
+          <span>Advertisement</span>
+        </div>
+      </section>
+      <section class="content-band" aria-labelledby="grading-title" data-animate>
+        <div class="section-heading">
+          <p class="eyebrow">Grading scale</p>
+          <h2 id="grading-title">IIUI grading scale</h2>
+          <p>IIUI reports results on a 4.0 grade-point scale. The table below shows the grade points for each letter grade and the typical marks range for each. Use it alongside the calculator above to estimate your GPA and CGPA.</p>
+        </div>
+        <div class="scale-table-wrap">
+            <table class="scale-table">
+              <caption class="sr-only">IIUI grade points</caption>
+              <thead><tr><th scope="col">Grade</th><th scope="col">Grade points</th><th scope="col">Typical marks (%)</th></tr></thead>
+              <tbody>
+              <tr><td>A</td><td>4.00</td><td>80–100</td></tr>
+              <tr><td>B+</td><td>3.50</td><td>75–79</td></tr>
+              <tr><td>B</td><td>3.00</td><td>70–74</td></tr>
+              <tr><td>C+</td><td>2.50</td><td>65–69</td></tr>
+              <tr><td>C</td><td>2.00</td><td>60–64</td></tr>
+              <tr><td>D+</td><td>1.50</td><td>55–59</td></tr>
+              <tr><td>D</td><td>1.00</td><td>50–54</td></tr>
+              <tr><td>F</td><td>0.00</td><td>Below 50</td></tr>
+              </tbody>
+            </table>
+          </div>
+        <p class="ad-note">Grade points are fixed; treat the marks ranges as typical values and confirm them against your official transcript.</p>
+      </section>
+      <section class="content-band" aria-labelledby="guide-title" data-animate>
+        <div class="article-grid">
+          <article class="content-card">
+            <h2 id="guide-title">How grading works at IIUI</h2>
+            <p>International Islamic University Islamabad uses absolute grading with the fixed marks bands above, on a half-point scale with no minus grades. The minimum passing grade is D (50%).</p>
+            <p>A BS degree requires a minimum CGPA of 2.00. A CGPA around 3.52 or above qualifies for the IIUI Dean's Honor List and strengthens merit-scholarship eligibility.</p>
+          </article>
+          <article class="content-card">
+            <h2>Worked example</h2>
+            <p>Suppose this semester you take two 3-credit-hour courses and score an A (4.0) in one and a B+ (3.5) in the other. The quality points are (4.0 × 3) + (3.5 × 3) = 12 + 10.5 = 22.5.</p>
+            <p>Your semester GPA is 22.5 ÷ 6 = 3.75. If your previous CGPA was 3.20 over 60 completed credit hours, your updated CGPA is ((3.20 × 60) + 22.5) ÷ 66 = 3.25.</p>
+          </article>
+          <article class="content-card">
+            <h2>Get an accurate estimate</h2>
+            <p>Pick the grade scale that matches your result card, enter every current-semester course with its exact credit hours, and keep lab and theory courses on separate rows when they carry separate credits. If your department uses a different grade-point table, treat the result as a planning estimate.</p>
+            
+          </article>
+          <aside class="disclaimer-box">
+            <strong>Unofficial estimate</strong>
+            <p>This website is independent and not affiliated with IIUI or any university. Always use your official transcript, examination office, or department policy for final GPA and CGPA decisions.</p>
+          </aside>
+        </div>
+      </section>
+      <div class="ad-slot ad-slot-middle" aria-label="Advertisement placeholder">
+          <span>Advertisement</span>
+        </div>
+      <section class="content-band" aria-labelledby="related-title" data-animate>
+        <div class="section-heading">
+          <p class="eyebrow">Related tools</p>
+          <h2 id="related-title">Keep exploring GPA calculators</h2>
+          <p>Move between the main calculator, focused student guides, and university-specific estimate pages.</p>
+        </div>
+        <div class="link-grid">
+          <a class="link-card" href="../cgpa-calculator-pakistan/index.html">CGPA Calculator Pakistan</a>
+          <a class="link-card" href="../semester-gpa-calculator/index.html">Semester GPA Calculator</a>
+          <a class="link-card" href="../gpa-to-percentage-pakistan/index.html">GPA to Percentage Pakistan</a>
+          <a class="link-card" href="../credit-hours-calculator/index.html">Credit Hours Calculator</a>
+        </div>
+        <div class="link-grid link-grid-compact">
+          <a class="link-card" href="../nust-gpa-calculator/index.html">NUST GPA Calculator</a>
+          <a class="link-card" href="../fast-gpa-calculator/index.html">FAST GPA Calculator</a>
+          <a class="link-card" href="../comsats-gpa-calculator/index.html">COMSATS GPA Calculator</a>
+          <a class="link-card" href="../iiui-gpa-calculator/index.html">IIUI GPA Calculator</a>
+          <a class="link-card" href="../giki-gpa-calculator/index.html">GIKI GPA Calculator</a>
+          <a class="link-card" href="../pieas-gpa-calculator/index.html">PIEAS GPA Calculator</a>
+          <a class="link-card" href="../air-university-gpa-calculator/index.html">Air University GPA Calculator</a>
+          <a class="link-card" href="../uet-gpa-calculator/index.html">UET GPA Calculator</a>
+          <a class="link-card" href="../ist-gpa-calculator/index.html">IST GPA Calculator</a>
+        </div>
+      </section>
+      <section class="faq-section" id="faq" aria-labelledby="faq-title" data-animate>
+        <div class="section-heading">
+          <p class="eyebrow">FAQ</p>
+          <h2 id="faq-title">IIUI GPA Calculator FAQ</h2>
+        </div>
+        <div class="faq-list">
+          <details><summary>Is this the official IIUI calculator?</summary><p>No. It is an independent student tool and is not affiliated with International Islamic University Islamabad.</p></details>
+          <details><summary>Does IIUI use minus grades?</summary><p>No. IIUI uses a half-point scale (A, B+, B, C+, C, D+, D, F) with no minus grades, so keep the Pakistan no-minus scale selected.</p></details>
+          <details><summary>What is the passing grade at IIUI?</summary><p>D (1.0 grade points), which requires at least 50% marks. Below 50% is an F and the course must be retaken.</p></details>
+          <details><summary>Is IIUI grading absolute or relative?</summary><p>IIUI uses absolute grading, so your grade depends on your own marks rather than the class average.</p></details>
+          <details><summary>What CGPA do I need for the Dean's Honor List?</summary><p>Around 3.52 or above. Always confirm the current threshold with your faculty office.</p></details>
+        </div>
+      </section>
+      <div class="ad-slot ad-slot-lower" aria-label="Advertisement placeholder">
+          <span>Advertisement</span>
+        </div>
+    </main>
+    <footer class="site-footer">
+      <div>
+        <strong>GPA Calculator Pakistan</strong>
+        <p>Unofficial GPA and CGPA tools for students.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html#calculator">Calculator</a>
+        <a href="../index.html#tools">Tools</a>
+        <a href="../index.html#universities">Universities</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+      </div>
+    </footer>
+    <script src="../script.js"></script>
+  </body>
+</html>

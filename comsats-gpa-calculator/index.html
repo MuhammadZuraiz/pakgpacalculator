@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>COMSATS GPA Calculator | Semester GPA and CGPA Tool</title>
+    <meta name="description" content="Estimate COMSATS semester GPA and CGPA with the real grading scale, grade points, and credit hours. Unofficial calculator for Pakistan students.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="COMSATS GPA Calculator">
+    <meta property="og:description" content="Estimate COMSATS semester GPA and CGPA with the real grading scale, grade points, and credit hours. Unofficial calculator for Pakistan students.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pakgpacalculator.netlify.app/comsats-gpa-calculator/">
+    <meta property="og:image" content="https://pakgpacalculator.netlify.app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="COMSATS GPA Calculator">
+    <meta name="twitter:description" content="Estimate COMSATS semester GPA and CGPA with the real grading scale, grade points, and credit hours. Unofficial calculator for Pakistan students.">
+    <meta name="twitter:image" content="https://pakgpacalculator.netlify.app/og-image.png">
+    <link rel="canonical" href="https://pakgpacalculator.netlify.app/comsats-gpa-calculator/">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7400673079827279"
+     crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+      (function () {
+        try {
+          var storedTheme = localStorage.getItem("gpa-theme");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme = storedTheme || (prefersDark ? "dark" : "light");
+        } catch (error) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"WebApplication","name":"COMSATS GPA Calculator","applicationCategory":"EducationalApplication","operatingSystem":"Any","description":"Estimate COMSATS semester GPA and CGPA with the real grading scale, grade points, and credit hours. Unofficial calculator for Pakistan students.","url":"https://pakgpacalculator.netlify.app/comsats-gpa-calculator/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+    </script>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this the official COMSATS calculator?","acceptedAnswer":{"@type":"Answer","text":"No. It is an independent student tool and is not affiliated with COMSATS University Islamabad."}},{"@type":"Question","name":"Does COMSATS use absolute or relative grading?","acceptedAnswer":{"@type":"Answer","text":"COMSATS uses absolute grading. Your marks map to a fixed band, so a higher class average does not lower your grade."}},{"@type":"Question","name":"What is the minimum passing grade at COMSATS?","acceptedAnswer":{"@type":"Answer","text":"C (2.0 grade points), which corresponds to roughly 60% marks under the absolute bands."}},{"@type":"Question","name":"Does COMSATS use minus grades?","acceptedAnswer":{"@type":"Answer","text":"Yes. COMSATS uses A-, B-, and C- grades, so keep the HEC scale selected in the calculator."}},{"@type":"Question","name":"What CGPA is good at COMSATS?","acceptedAnswer":{"@type":"Answer","text":"A CGPA above 3.0 is considered good, and 3.5 or above is excellent and Dean's List eligible."}}]}
+    </script>
+  </head>
+  <body data-page-type="university" data-page-slug="comsats-gpa-calculator">
+    <a class="skip-link" href="#calculator">Skip to main content</a>
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Main navigation">
+        <a class="brand" href="../index.html" aria-label="GPA Calculator Pakistan home">
+          <span class="brand-mark" aria-hidden="true">4.0</span>
+          <span>GPA Calculator Pakistan</span>
+        </a>
+        <button class="nav-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-actions" id="primary-nav">
+          <div class="nav-links">
+            <a href="../index.html#calculator">Calculator</a>
+            <a href="../index.html#tools">Tools</a>
+            <a href="../index.html#universities">Universities</a>
+            <a href="../index.html#guide">Guide</a>
+            <a href="../about.html">About</a>
+            <a href="../contact.html">Contact</a>
+            <a href="../privacy.html">Privacy</a>
+          </div>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme">
+            <span class="theme-toggle__icon" aria-hidden="true">D</span>
+            <span class="theme-toggle__label">Dark</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero-band" aria-labelledby="page-title" data-animate>
+        <div class="hero-copy">
+          <p class="eyebrow">University calculator</p>
+          <h1 id="page-title">COMSATS GPA Calculator</h1>
+          <p>Use this unofficial COMSATS GPA calculator to estimate your semester GPA and updated CGPA using COMSATS's grading scale and your credit hours.</p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <button class="button button-primary" type="button" id="hero-sample"><span aria-hidden="true">+</span>Load sample</button>
+            <a class="button button-ghost" href="#guide-title">Read guide</a>
+          </div>
+        </div>
+        <aside class="quick-stats" aria-label="Page highlights">
+          <div><strong>4.0</strong><span>scale focus</span></div>
+          <div><strong>30</strong><span>course rows</span></div>
+          <div><strong>Free</strong><span>student tool</span></div>
+        </aside>
+      </section>
+      <section class="calculator-section" id="calculator" aria-labelledby="calculator-title" data-animate>
+        <div class="section-heading">
+          <p class="eyebrow">Start calculating</p>
+          <h2 id="calculator-title">COMSATS GPA and CGPA estimate</h2>
+          <p>Enter your COMSATS courses, grades, and credit hours. The scale below is preset to match COMSATS; the result is only an estimate, and your official transcript is final.</p>
+        </div>
+        <form class="calculator-shell" id="gpa-form" novalidate data-animate data-default-scale="hec">
+          <div class="toolbar">
+            <div>
+              <label for="scale-select">Grade scale</label>
+              <select id="scale-select" name="scale">
+                <option value="pakistan">Pakistan 4.0 scale (no minus grades)</option>
+                <option value="hec">HEC 4.0 scale (with minus grades)</option>
+              </select>
+            </div>
+            <div class="toolbar-actions">
+              <button class="button button-secondary" type="button" id="fill-sample"><span aria-hidden="true">+</span>Sample</button>
+              <button class="button button-secondary" type="button" id="reset-form"><span aria-hidden="true">x</span>Reset</button>
+              <button class="button button-secondary" type="button" id="print-result"><span aria-hidden="true">p</span>Print</button>
+            </div>
+          </div>
+          <div class="calculator-grid">
+            <div class="entry-panel">
+              <div class="previous-grid">
+                <div>
+                  <label for="previous-cgpa">Previous CGPA</label>
+                  <input id="previous-cgpa" name="previousCgpa" type="number" min="0" max="4" step="0.01" inputmode="decimal" placeholder="3.20">
+                </div>
+                <div>
+                  <label for="completed-credits">Completed credit hours</label>
+                  <input id="completed-credits" name="completedCredits" type="number" min="0" step="1" inputmode="numeric" placeholder="60" aria-describedby="completed-help">
+                  <small id="completed-help">Credits completed before this semester.</small>
+                </div>
+              </div>
+              <div class="course-table-wrap">
+                <table class="course-table">
+                  <caption>Current semester courses</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">No.</th>
+                      <th scope="col">Subject</th>
+                      <th scope="col">Grade</th>
+                      <th scope="col">Credits</th>
+                      <th scope="col">Points</th>
+                      <th scope="col"><span class="sr-only">Actions</span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="course-rows"></tbody>
+                </table>
+              </div>
+              <div class="table-actions">
+                <button class="button button-secondary" type="button" id="add-row"><span aria-hidden="true">+</span>Add course</button>
+                <p id="row-counter" aria-live="polite">8 of 30 rows</p>
+              </div>
+            </div>
+            <aside class="result-panel" aria-labelledby="results-title">
+              <p class="eyebrow">Live result</p>
+              <h3 id="results-title">Your GPA summary</h3>
+              <div class="score-pair">
+                <div><span>Semester GPA</span><strong id="semester-gpa">0.00</strong></div>
+                <div><span>Updated CGPA</span><strong id="updated-cgpa">0.00</strong></div>
+              </div>
+              <dl class="result-list">
+                <div><dt>Semester credits</dt><dd id="semester-credits">0</dd></div>
+                <div><dt>Grade points</dt><dd id="total-points">0.00</dd></div>
+                <div><dt>Courses counted</dt><dd id="courses-counted">0</dd></div>
+                <div><dt>Standing</dt><dd id="standing">Add courses</dd></div>
+              </dl>
+              <div class="formula-box">
+                <strong>CGPA formula</strong>
+                <p>((previous CGPA x completed credits) + current points) / total credits</p>
+              </div>
+              <p class="status-message" id="status-message" role="status" aria-live="polite">Select grades and credit hours to calculate your GPA.</p>
+            </aside>
+          </div>
+        </form>
+        <div class="ad-slot ad-slot-top" aria-label="Advertisement placeholder">
+          <span>Advertisement</span>
+        </div>
+      </section>
+      <section class="content-band" aria-labelledby="grading-title" data-animate>
+        <div class="section-heading">
+          <p class="eyebrow">Grading scale</p>
+          <h2 id="grading-title">COMSATS grading scale</h2>
+          <p>COMSATS reports results on a 4.0 grade-point scale. The table below shows the grade points for each letter grade and the typical marks range for each. Use it alongside the calculator above to estimate your GPA and CGPA.</p>
+        </div>
+        <div class="scale-table-wrap">
+            <table class="scale-table">
+              <caption class="sr-only">COMSATS grade points</caption>
+              <thead><tr><th scope="col">Grade</th><th scope="col">Grade points</th><th scope="col">Typical marks (%)</th></tr></thead>
+              <tbody>
+              <tr><td>A</td><td>4.00</td><td>85–100</td></tr>
+              <tr><td>A-</td><td>3.67</td><td>80–84</td></tr>
+              <tr><td>B+</td><td>3.33</td><td>75–79</td></tr>
+              <tr><td>B</td><td>3.00</td><td>71–74</td></tr>
+              <tr><td>B-</td><td>2.67</td><td>68–70</td></tr>
+              <tr><td>C+</td><td>2.33</td><td>64–67</td></tr>
+              <tr><td>C</td><td>2.00</td><td>60–63</td></tr>
+              <tr><td>C-</td><td>1.67</td><td>57–59</td></tr>
+              <tr><td>D+</td><td>1.30</td><td>53–56</td></tr>
+              <tr><td>D</td><td>1.00</td><td>50–52</td></tr>
+              <tr><td>F</td><td>0.00</td><td>Below 50</td></tr>
+              </tbody>
+            </table>
+          </div>
+        <p class="ad-note">Grade points are fixed; treat the marks ranges as typical values and confirm them against your official transcript.</p>
+      </section>
+      <section class="content-band" aria-labelledby="guide-title" data-animate>
+        <div class="article-grid">
+          <article class="content-card">
+            <h2 id="guide-title">How grading works at COMSATS</h2>
+            <p>COMSATS University Islamabad uses absolute grading, adopted university-wide from Fall 2021. Your letter grade comes directly from your marks using the fixed bands above, regardless of the class average.</p>
+            <p>The minimum passing grade is C (2.0). A CGPA of 3.0 or above is considered good, and 3.5 or above qualifies for the Dean's List and graduation with distinction.</p>
+          </article>
+          <article class="content-card">
+            <h2>Worked example</h2>
+            <p>Suppose this semester you take two 3-credit-hour courses and score an A (4.0) in one and a B (3.0) in the other. The quality points are (4.0 × 3) + (3.0 × 3) = 12 + 9 = 21.</p>
+            <p>Your semester GPA is 21 ÷ 6 = 3.50. If your previous CGPA was 3.20 over 60 completed credit hours, your updated CGPA is about ((3.20 × 60) + 21) ÷ 66 = 3.23. On this scale a B- would add 2.67 grade points per credit hour and a C- would add 1.67.</p>
+          </article>
+          <article class="content-card">
+            <h2>Get an accurate estimate</h2>
+            <p>Pick the grade scale that matches your result card, enter every current-semester course with its exact credit hours, and keep lab and theory courses on separate rows when they carry separate credits. If your department uses a different grade-point table, treat the result as a planning estimate.</p>
+            
+          </article>
+          <aside class="disclaimer-box">
+            <strong>Unofficial estimate</strong>
+            <p>This website is independent and not affiliated with COMSATS or any university. Always use your official transcript, examination office, or department policy for final GPA and CGPA decisions.</p>
+          </aside>
+        </div>
+      </section>
+      <div class="ad-slot ad-slot-middle" aria-label="Advertisement placeholder">
+          <span>Advertisement</span>
+        </div>
+      <section class="content-band" aria-labelledby="related-title" data-animate>
+        <div class="section-heading">
+          <p class="eyebrow">Related tools</p>
+          <h2 id="related-title">Keep exploring GPA calculators</h2>
+          <p>Move between the main calculator, focused student guides, and university-specific estimate pages.</p>
+        </div>
+        <div class="link-grid">
+          <a class="link-card" href="../cgpa-calculator-pakistan/index.html">CGPA Calculator Pakistan</a>
+          <a class="link-card" href="../semester-gpa-calculator/index.html">Semester GPA Calculator</a>
+          <a class="link-card" href="../gpa-to-percentage-pakistan/index.html">GPA to Percentage Pakistan</a>
+          <a class="link-card" href="../credit-hours-calculator/index.html">Credit Hours Calculator</a>
+        </div>
+        <div class="link-grid link-grid-compact">
+          <a class="link-card" href="../nust-gpa-calculator/index.html">NUST GPA Calculator</a>
+          <a class="link-card" href="../fast-gpa-calculator/index.html">FAST GPA Calculator</a>
+          <a class="link-card" href="../comsats-gpa-calculator/index.html">COMSATS GPA Calculator</a>
+          <a class="link-card" href="../iiui-gpa-calculator/index.html">IIUI GPA Calculator</a>
+          <a class="link-card" href="../giki-gpa-calculator/index.html">GIKI GPA Calculator</a>
+          <a class="link-card" href="../pieas-gpa-calculator/index.html">PIEAS GPA Calculator</a>
+          <a class="link-card" href="../air-university-gpa-calculator/index.html">Air University GPA Calculator</a>
+          <a class="link-card" href="../uet-gpa-calculator/index.html">UET GPA Calculator</a>
+          <a class="link-card" href="../ist-gpa-calculator/index.html">IST GPA Calculator</a>
+        </div>
+      </section>
+      <section class="faq-section" id="faq" aria-labelledby="faq-title" data-animate>
+        <div class="section-heading">
+          <p class="eyebrow">FAQ</p>
+          <h2 id="faq-title">COMSATS GPA Calculator FAQ</h2>
+        </div>
+        <div class="faq-list">
+          <details><summary>Is this the official COMSATS calculator?</summary><p>No. It is an independent student tool and is not affiliated with COMSATS University Islamabad.</p></details>
+          <details><summary>Does COMSATS use absolute or relative grading?</summary><p>COMSATS uses absolute grading. Your marks map to a fixed band, so a higher class average does not lower your grade.</p></details>
+          <details><summary>What is the minimum passing grade at COMSATS?</summary><p>C (2.0 grade points), which corresponds to roughly 60% marks under the absolute bands.</p></details>
+          <details><summary>Does COMSATS use minus grades?</summary><p>Yes. COMSATS uses A-, B-, and C- grades, so keep the HEC scale selected in the calculator.</p></details>
+          <details><summary>What CGPA is good at COMSATS?</summary><p>A CGPA above 3.0 is considered good, and 3.5 or above is excellent and Dean's List eligible.</p></details>
+        </div>
+      </section>
+      <div class="ad-slot ad-slot-lower" aria-label="Advertisement placeholder">
+          <span>Advertisement</span>
+        </div>
+    </main>
+    <footer class="site-footer">
+      <div>
+        <strong>GPA Calculator Pakistan</strong>
+        <p>Unofficial GPA and CGPA tools for students.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html#calculator">Calculator</a>
+        <a href="../index.html#tools">Tools</a>
+        <a href="../index.html#universities">Universities</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+      </div>
+    </footer>
+    <script src="../script.js"></script>
+  </body>
+</html>
