@@ -2,7 +2,67 @@
   publish = "."
 
 [[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/site.config.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/DEPLOYMENT.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify.toml"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/gpa-calculator-pakistan"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/gpa-calculator-pakistan/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/gpa-calculator-pakistan/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cgpa-calculator-pakistan"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cgpa-calculator-pakistan/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cgpa-calculator-pakistan/index.html"
   to = "/"
   status = 301
   force = true

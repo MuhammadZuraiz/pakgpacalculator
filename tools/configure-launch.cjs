@@ -57,14 +57,14 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
-function buildHeadTags(config) {
+function buildHeadTags(config, includeAds) {
   const lines = [];
 
   if (config.searchConsoleVerification) {
     lines.push(`    <meta name="google-site-verification" content="${escapeHtml(config.searchConsoleVerification)}">`);
   }
 
-  if (config.adsenseClientId) {
+  if (includeAds && config.adsenseClientId) {
     const clientId = escapeHtml(config.adsenseClientId);
     lines.push(
       `    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}"`,
@@ -88,11 +88,11 @@ function buildHeadTags(config) {
   return lines.join("\n");
 }
 
-function updateLaunchHead(file, config) {
+function updateLaunchHead(file, config, includeAds) {
   const target = path.join(root, file);
   const start = "    <!-- launch-head:start -->";
   const end = "    <!-- launch-head:end -->";
-  const tags = buildHeadTags(config);
+  const tags = buildHeadTags(config, includeAds);
   const replacement = tags ? `${start}\n${tags}\n${end}` : `${start}\n${end}`;
   let html = fs.readFileSync(target, "utf8");
   const markerPattern = /    <!-- launch-head:start -->[\s\S]*?    <!-- launch-head:end -->/;
@@ -143,9 +143,9 @@ validateEmail(next.contactEmail);
 
 fs.writeFileSync(configPath, `${JSON.stringify(next, null, 2)}\n`, "utf8");
 require("./generate-hub-pages.cjs");
-updateLaunchHead("index.html", next);
-updateLaunchHead("privacy.html", next);
-updateLaunchHead("404.html", next);
+updateLaunchHead("index.html", next, true);
+updateLaunchHead("privacy.html", next, false);
+updateLaunchHead("404.html", next, false);
 absolutizeUrls("index.html", next.siteUrl, "/");
 absolutizeUrls("privacy.html", next.siteUrl, "/privacy.html");
 

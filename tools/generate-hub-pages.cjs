@@ -35,69 +35,9 @@ function normalizeSiteUrl(value) {
 const launchConfig = readLaunchConfig();
 const domain = launchConfig.siteUrl;
 const hasRealDomain = domain !== defaultDomain;
-const buildDate = new Date().toISOString().slice(0, 10);
-
-const toolLinks = [
-  ["cgpa-calculator-pakistan", "CGPA Calculator Pakistan"],
-  ["semester-gpa-calculator", "Semester GPA Calculator"],
-  ["gpa-to-percentage-pakistan", "GPA to Percentage Pakistan"],
-  ["credit-hours-calculator", "Credit Hours Calculator"]
-];
-
-const universityLinks = [
-  ["nust-gpa-calculator", "NUST GPA Calculator"],
-  ["fast-gpa-calculator", "FAST GPA Calculator"],
-  ["comsats-gpa-calculator", "COMSATS GPA Calculator"],
-  ["iiui-gpa-calculator", "IIUI GPA Calculator"],
-  ["giki-gpa-calculator", "GIKI GPA Calculator"],
-  ["pieas-gpa-calculator", "PIEAS GPA Calculator"],
-  ["air-university-gpa-calculator", "Air University GPA Calculator"],
-  ["uet-gpa-calculator", "UET GPA Calculator"],
-  ["ist-gpa-calculator", "IST GPA Calculator"]
-];
+const editorialReviewDate = "2026-08-12";
 
 const pages = [
-  {
-    slug: "cgpa-calculator-pakistan",
-    type: "calculator",
-    title: "CGPA Calculator Pakistan | Updated CGPA Tool",
-    description: "Calculate updated CGPA in Pakistan using previous CGPA, completed credit hours, grades, and current semester credits.",
-    eyebrow: "CGPA tool",
-    h1: "CGPA Calculator Pakistan",
-    intro: "Estimate your updated CGPA by combining previous CGPA, completed credit hours, and the courses from your current semester.",
-    calculatorTitle: "Updated CGPA calculator",
-    calculatorText: "Enter previous CGPA and completed credits first, then add current-semester grades and credit hours. The result is an estimate only.",
-    sections: [
-      {
-        heading: "How CGPA is calculated",
-        body: [
-          "CGPA is a weighted average of grade points across completed credit hours. A 3-credit course affects your result more than a 1-credit lab because it carries more academic weight.",
-          "The calculator uses this formula: ((previous CGPA × completed credits) + current semester points) ÷ total credits. Each course contributes grade points × credit hours, so the same letter grade counts for more in a heavier course."
-        ]
-      },
-      {
-        heading: "Worked example for Pakistan students",
-        body: [
-          "Suppose your previous CGPA is 3.20 over 60 completed credit hours, and this semester you score a 3.75 GPA over 6 new credits worth 22.5 quality points.",
-          "Your updated CGPA is ((3.20 × 60) + 22.5) ÷ 66 = 3.25. Notice how a strong semester only nudges the CGPA upward, because the 60 older credits still carry most of the weight."
-        ]
-      },
-      {
-        heading: "Repeats, fails, and rounding",
-        body: [
-          "If you repeat a course, most Pakistan universities replace or average the grade according to their own policy, so your portal CGPA can differ from a raw calculation. Failed (F) courses usually count as 0 grade points until they are cleared.",
-          "Universities also round differently (some to two decimals, some to one). Treat this tool as a planning estimate and confirm the final number on your transcript or result portal."
-        ]
-      }
-    ],
-    faqs: [
-      ["Do I include current semester credits in completed credit hours?", "No. Completed credit hours are only the credits finished before the semester you are entering. The current semester credits are added automatically when you enter this semester's courses."],
-      ["Why is updated CGPA different from semester GPA?", "Semester GPA uses only the current semester. CGPA combines your previous academic record with the current semester, weighted by credit hours."],
-      ["How do repeated courses affect CGPA?", "It depends on your university's repeat policy. Some replace the old grade, some average both attempts. Check your official rules, because the calculator cannot know which policy applies to you."],
-      ["Does a heavier semester change CGPA more?", "Yes. More credit hours in the current semester give it more weight, so a strong or weak high-credit semester moves your CGPA more than a light one."],
-      ["Is this the official CGPA from my university?", "No. It is an unofficial estimate. Your university transcript, result portal, and department rules are always final."]
-    ]
-  },
   {
     slug: "semester-gpa-calculator",
     type: "calculator",
@@ -107,7 +47,11 @@ const pages = [
     h1: "Semester GPA Calculator",
     intro: "Calculate the GPA for one semester by entering each course grade and credit hours.",
     calculatorTitle: "Current semester GPA calculator",
-    calculatorText: "Leave previous CGPA fields empty if you only want the current semester GPA.",
+    calculatorText: "Enter only this semester's awarded letter grades and exact credit hours. This focused view does not combine an earlier CGPA.",
+    sources: [
+      ["HEC examination policy guidelines", "https://www.hec.gov.pk/english/services/universities/Documents/Final%20Examination%20Policy%20Guidelines.pdf", "General semester assessment and GPA/CGPA context"],
+      ["Editorial methodology for this calculator", "/methodology.html", "Formula, calculator tests, and limitations"]
+    ],
     sections: [
       {
         heading: "When to use semester GPA",
@@ -127,15 +71,15 @@ const pages = [
         heading: "Reading your result card",
         body: [
           "Most Pakistan result cards list each course with its credit hours, letter grade, and grade points. Match those exact values in the calculator, including lab courses that carry their own separate credit.",
-          "If your university uses minus grades (A-, B-, C-), switch to the HEC scale in the calculator so the grade points line up with your transcript."
+          "The two common presets are only starting points. If your university has a source-reviewed page on this site, use that page's exact preset; otherwise compare every grade point with your own transcript key."
         ]
       }
     ],
     faqs: [
-      ["Can I ignore previous CGPA?", "Yes. Leave previous CGPA and completed credits blank to calculate only this semester's GPA."],
+      ["Does this page use my previous CGPA?", "No. This focused calculator uses only the letter grades and credit hours from the semester you enter."],
       ["Can I add labs separately?", "Yes. Add a lab as a separate row if your transcript gives it separate credit hours and a separate grade."],
       ["Can failed courses be counted?", "Yes. Enter F with the correct credit hours if your university counts the failed course in GPA. F usually contributes 0 grade points."],
-      ["Which grade scale should I pick?", "Use the scale shown on your result card. Choose the no-minus scale (A, B+, B) for NUST or IIUI style, and the HEC scale (with A-, B-, C-) for COMSATS, FAST, and similar universities."],
+      ["Which grade scale should I pick?", "Use the source-reviewed university page when available. Otherwise choose the common preset closest to your transcript and verify each point value; similarly named scales can differ by 0.01 or more."],
       ["Why is my semester GPA slightly different from the portal?", "Differences usually come from rounding, relative grading, or a department-specific grade-point table. Match the scale and credit hours carefully before comparing."]
     ]
   },
@@ -147,6 +91,11 @@ const pages = [
     eyebrow: "Conversion guide",
     h1: "GPA to Percentage Pakistan",
     intro: "There is no single official GPA to percentage formula for every university in Pakistan. Use this guide to understand the common approaches and avoid misleading conversions.",
+    sources: [
+      ["HEC equivalence downloads", "https://www.hec.gov.pk/english/services/students/DES/Pages/Downloads.aspx", "Includes HEC's notification about stopping CGPA-to-percentage conversion"],
+      ["HEC final examination policy guidelines", "https://www.hec.gov.pk/english/services/universities/Documents/Final%20Examination%20Policy%20Guidelines.pdf", "Contains a fractionalized semester-system grading table; it is a different policy context from degree equivalence"],
+      ["NUST postgraduate application instructions", "https://nust.edu.pk/admissions/masters/instructions-for-filling-online-application-form/", "Shows that NUST asks applicants to use CGPA when the transcript reports it"]
+    ],
     sections: [
       {
         heading: "Why there is no universal formula",
@@ -156,36 +105,41 @@ const pages = [
         ]
       },
       {
-        heading: "Formulas universities actually use",
+        heading: "What HEC and universities ask for",
         body: [
-          "NUST publishes a direct conversion: Percentage = (CGPA × 25) − 12.5. On this formula a 3.00 CGPA is 62.5% and a 4.00 CGPA is 87.5%.",
-          "Many other institutions do not publish a formula at all. A rough proportional estimate such as (GPA ÷ 4) × 100 is sometimes used, but it can overstate or understate your real standing, so label it clearly as an estimate."
+          "HEC's Degree Equivalence Section downloads include a notification titled “Stopping of Conversion of CGPA into Percentage.” That means this site should not present one blanket HEC formula as a certified degree-equivalence conversion.",
+          "HEC's separate Final Examination Policy Guidelines include a fractionalized semester-system grading table. That academic-policy table and the Degree Equivalence Section's stopping notice serve different purposes; neither supports silently applying one formula to every admission, employment, or equivalence form.",
+          "NUST's current postgraduate application instructions say that when both percentage and CGPA appear on a transcript, the applicant should enter the CGPA. That is an application rule, not a mathematical conversion formula."
         ]
       },
       {
-        heading: "The HEC equivalence caveat",
+        heading: "A safe decision process",
         body: [
-          "For foreign admissions, evaluators (and HEC equivalence) often look at your transcript's own grade-to-marks mapping rather than a blanket formula. Sending the official transcript is safer than sending a converted percentage.",
-          "When in doubt, submit your CGPA and the university's grading key, and only add a percentage if the receiving body specifically requires one."
+          "For admissions, scholarships, or employment, first follow the receiving organization's wording. Submit the transcript value it requests and attach the university's grading key when allowed.",
+          "If a form accepts only percentage but your transcript shows only CGPA, ask the receiving organization whether it accepts a university-issued equivalence letter. Do not silently use GPA × 25 or (GPA ÷ 4) × 100 and label it official."
         ]
       }
     ],
     faqs: [
-      ["Is GPA × 25 always correct?", "No. It is only a rough proportional estimate. Some universities, such as NUST, publish their own formula, and many publish none at all."],
-      ["What is the NUST GPA to percentage formula?", "NUST uses Percentage = (CGPA × 25) − 12.5. For example, a 3.20 CGPA converts to about 67.5%."],
+      ["Is GPA × 25 an official Pakistan-wide formula?", "No. Multiplying by 25 is a proportional estimate, not a universal HEC or university conversion. It can misstate the meaning of a transcript grade."],
+      ["What should a NUST applicant enter?", "NUST's current postgraduate instructions say to enter CGPA when both CGPA and percentage are printed on the transcript. Follow the instructions for the exact programme and year you are applying to."],
       ["Should I submit GPA or percentage?", "Submit the format the organization requests, but keep your official GPA and transcript visible if the percentage is only an estimate."],
-      ["Does HEC have one official conversion?", "No single formula fits every university. HEC equivalence usually relies on the transcript's own grading key rather than a fixed GPA-to-percentage formula."],
+      ["Does HEC endorse one current formula for every purpose?", "No. HEC's Degree Equivalence Section links a notification about stopping CGPA-to-percentage conversion for that process, while its Final Examination Policy Guidelines contain a context-specific semester-system table. Follow the document governing your exact application."],
       ["Can this site certify my percentage?", "No. Only your university or an authorized equivalence body can certify a conversion."]
     ]
   },
   {
     slug: "credit-hours-calculator",
     type: "guide",
-    title: "Credit Hours Calculator | GPA Quality Points Guide",
+    title: "Credit Hours & Quality Points Guide | Pakistan Universities",
     description: "Learn how credit hours, grade points, and quality points affect GPA and CGPA calculations in Pakistan universities.",
     eyebrow: "Credit guide",
-    h1: "Credit Hours Calculator",
-    intro: "Credit hours decide how much weight each course has in GPA and CGPA. Use this guide to understand credits, quality points, and semester load.",
+    h1: "Credit Hours & Quality Points Guide",
+    intro: "Credit hours decide how much weight each course has in GPA and CGPA. This guide explains credits, quality points, course notation, and common transcript mistakes.",
+    sources: [
+      ["HEC semester-system policy", "https://www.hec.gov.pk/english/policies/Pages/NCES.aspx", "National context for semester assessment and credit-hour systems"],
+      ["GIKI academic setup", "https://giki.edu.pk/academics/academic-setup/", "A concrete official example of theory/lab contact hours and credit weighting"]
+    ],
     sections: [
       {
         heading: "What credit hours mean",
@@ -198,14 +152,14 @@ const pages = [
         heading: "The quality points formula",
         body: [
           "Quality points = grade points × credit hours. For example, an A in a 3-credit course gives 12 quality points on a 4.0 scale.",
-          "Semester GPA is total quality points divided by total semester credit hours. CGPA extends the same idea across every credit you have completed."
+          "Semester GPA is total quality points divided by total semester credit hours. CGPA extends the same idea across all GPA-bearing credits counted in your cumulative record."
         ]
       },
       {
         heading: "Labs versus theory credits",
         body: [
           "Many Pakistan engineering and computing programs split a subject into a theory course and a separate lab, each with its own credit hours and grade. Enter them as separate rows so each is weighted correctly.",
-          "A 1-credit lab with a low grade affects your GPA far less than a 3-credit theory course, which is why high-credit courses deserve the most attention."
+          "Notation such as 4(3-1) commonly means four total credit hours made up of three theory credits and one lab credit. It does not mean four classroom hours plus three more; check the legend in your scheme of studies."
         ]
       },
       {
@@ -220,14 +174,14 @@ const pages = [
       ["Are credit hours the same as marks?", "No. Marks show your score in a course, while credit hours show the course's weight in your GPA."],
       ["Can a 1-credit lab affect GPA?", "Yes, but much less than a 3-credit or 4-credit course, because GPA is weighted by credit hours."],
       ["Should repeated courses be counted twice?", "That depends on your university's repeat policy. Some replace the grade and some average both attempts, so check the official rule."],
-      ["How many credit hours are normal per semester?", "Most full-time Pakistan undergraduate semesters are around 15 to 18 credit hours, though this varies by program and year."],
+      ["What does 4(3-1) usually mean?", "It commonly describes a four-credit course with three theory credits and one lab credit. Confirm the notation in your own scheme of studies before entering separate rows."],
       ["Do withdrawn courses count?", "Usually not. Many universities mark withdrawn courses as W and exclude them from GPA, but confirm with your own regulations."]
     ]
   }
 ];
 
-// Verified June 2026 from official regulations, Scholaro, and university sources.
-// Two grade-point families: "pakistan" (0.5 steps, no minus grades) and "hec" (with minus grades).
+// Manually reviewed against the official sources linked on each page.
+// Keep source dates and calculator grade points in sync when a policy changes.
 const universityData = [
   {
     slug: "nust-gpa-calculator",
@@ -239,14 +193,22 @@ const universityData = [
       ["C", 2, ""], ["D+", 1.5, ""], ["D", 1, ""], ["F", 0, ""]
     ],
     gradingNote: "NUST uses relative grading (a bell curve) in most courses, so your letter grade depends on how your marks compare with the class rather than on fixed percentage cut-offs. The grade points for each letter, however, are fixed as shown above, and NUST does not award minus grades such as A- or B-.",
-    standingNote: "The minimum passing GPA is 2.00, and some BS programs require a 2.50 CGPA to graduate. A semester GPA below the threshold can place a student on probation.",
-    percentFormula: "NUST publishes a conversion formula: Percentage = (CGPA × 25) − 12.5. For example, a 3.20 CGPA is about 67.5%.",
+    standingNote: "The handbook lists 2.00 as the minimum graduation CGPA for most undergraduate programmes and 2.50 for BBA, BS Economics, BS Public Administration, BS Mass Communication, BS Accounting & Finance, and BS Psychology.",
+    percentFormula: null,
+    source: {
+      title: "NUST Undergraduate Student Handbook",
+      url: "https://nust.edu.pk/wp-content/uploads/2020/03/UG-Student-Handbook.pdf",
+      fallbackTitle: "NUST student handbooks page",
+      fallbackUrl: "https://nust.edu.pk/downloads/student-handbooks/",
+      reviewed: "12 August 2026",
+      scope: "Used for the official letter-grade points, relative-grading note, credit-hour definition, and programme-specific graduation CGPA thresholds."
+    },
     faqs: [
       ["Is this the official NUST calculator?", "No. This is an independent student tool and is not affiliated with NUST."],
       ["Does NUST use relative grading?", "Yes. Most NUST courses are graded on a curve, so the marks needed for each grade depend on the class, while the grade points per letter stay fixed."],
-      ["Does NUST have A- or B- grades?", "No. NUST uses a half-point scale (A, B+, B, C+, C, D+, D, F) with no minus grades. Keep the Pakistan no-minus scale selected for NUST."],
-      ["How do I convert my NUST CGPA to percentage?", "NUST uses Percentage = (CGPA × 25) − 12.5. A 3.00 CGPA converts to 62.5%."],
-      ["What CGPA keeps me off probation at NUST?", "You generally need to keep a CGPA of 2.00 or above. Check your school's regulations, as some programs set a higher bar."]
+      ["Does NUST have A- or B- grades?", "No. The cited NUST undergraduate table uses A, B+, B, C+, C, D+, D, and F with no minus grades. This page starts with that NUST-specific preset selected."],
+      ["Should I convert a NUST CGPA to percentage?", "Use CGPA when your transcript reports CGPA. If another organization insists on percentage, ask NUST or that organization which documented conversion it accepts instead of assuming a universal formula."],
+      ["What CGPA is required to graduate from NUST?", "The handbook lists 2.00 for most undergraduate programmes and 2.50 for several business and social-science programmes. Check the rule for your own school and intake."]
     ]
   },
   {
@@ -255,19 +217,25 @@ const universityData = [
     audience: "computing, engineering, and business campuses",
     scaleKey: "hec",
     gradeRows: [
-      ["A+", 4, "90–100"], ["A", 4, "85–89"], ["A-", 3.67, "80–84"], ["B+", 3.33, "75–79"],
-      ["B", 3, "71–74"], ["B-", 2.67, "68–70"], ["C+", 2.33, "64–67"], ["C", 2, "61–63"],
-      ["C-", 1.67, "58–60"], ["D+", 1.33, "54–57"], ["D", 1, "50–53"], ["F", 0, "Below 50"]
+      ["A+", 4, ""], ["A", 4, ""], ["A-", 3.67, ""], ["B+", 3.33, ""],
+      ["B", 3, ""], ["B-", 2.67, ""], ["C+", 2.33, ""], ["C", 2, ""],
+      ["C-", 1.67, ""], ["D+", 1.33, ""], ["D", 1, ""], ["F", 0, ""]
     ],
-    gradingNote: "FAST-NUCES uses absolute grading: your marks map directly to a letter grade using fixed bands, regardless of the class average. FAST also awards an A+ for 90% and above, which carries the same 4.0 grade points as an A.",
-    standingNote: "Most BS and BBA programs require a minimum CGPA of 2.00 to graduate (2.50 for MS and MBA, 3.00 for PhD). Falling below the threshold leads to probation.",
+    gradingNote: "FAST-NUCES publishes fixed grade points for each letter grade, but the current academic rules do not provide one universal percentage-to-letter table for every undergraduate course. Use the letter grade already awarded in your result, not an assumed marks cut-off. A+ and A both carry 4.00 points.",
+    standingNote: "The current rules require a minimum CGPA of 2.00 for BS and BBA, 2.50 for MS and MBA, and 3.00 for PhD to avoid academic warning.",
     percentFormula: null,
+    source: {
+      title: "FAST-NUCES Academic Grading and Repeat Rules",
+      url: "https://www.nu.edu.pk/Student/Grading",
+      reviewed: "12 August 2026",
+      scope: "Used for current letter-grade points, SGPA/CGPA formulas, repeat-course treatment, excluded grades, and academic-warning thresholds. The source does not support a single site-wide marks cut-off table."
+    },
     faqs: [
       ["Is this the official FAST calculator?", "No. It is an independent student tool and is not affiliated with FAST-NUCES."],
-      ["Does FAST use absolute or relative grading?", "FAST uses absolute grading, so your marks map to a fixed letter-grade band rather than a class curve."],
-      ["Does an A+ count higher than an A at FAST?", "No. A+ and A both carry 4.0 grade points, so they have the same effect on your GPA. Select A in the calculator for either."],
+      ["Can I turn FAST marks directly into a letter grade here?", "Not reliably. The current rules publish grade points, while course grading criteria are communicated by the instructor. Enter the letter grade shown in your official result."],
+      ["Does an A+ count higher than an A at FAST?", "No. A+ and A both carry 4.0 grade points, so they have the same effect on GPA. The FAST-specific preset includes both labels."],
       ["What CGPA do I need to graduate from FAST?", "Most undergraduate programs require a minimum CGPA of 2.00, with higher minimums for MS and PhD."],
-      ["Why is my FAST GPA different from the portal?", "Check that you used the HEC scale with minus grades and the exact credit hours, including separate lab credits."]
+      ["How does FAST handle a repeated course?", "The current academic rules say only the most recent grade points are used in CGPA, even when the new grade is lower. Rebuild the cumulative record carefully if you are checking a repeat." ]
     ]
   },
   {
@@ -276,19 +244,25 @@ const universityData = [
     audience: "campuses and faculties",
     scaleKey: "hec",
     gradeRows: [
-      ["A", 4, "85–100"], ["A-", 3.67, "80–84"], ["B+", 3.33, "75–79"], ["B", 3, "71–74"],
-      ["B-", 2.67, "68–70"], ["C+", 2.33, "64–67"], ["C", 2, "60–63"], ["C-", 1.67, "57–59"],
-      ["D+", 1.3, "53–56"], ["D", 1, "50–52"], ["F", 0, "Below 50"]
+      ["A", 4, "85 and above"], ["A-", 3.66, "80–84"], ["B+", 3.33, "75–79"], ["B", 3, "71–74"],
+      ["B-", 2.66, "68–70"], ["C+", 2.33, "64–67"], ["C", 2, "61–63"], ["C-", 1.66, "58–60"],
+      ["D+", 1.3, "54–57"], ["D", 1, "50–53"], ["F", 0, "Below 50"]
     ],
     gradingNote: "COMSATS University Islamabad uses absolute grading, adopted university-wide from Fall 2021. Your letter grade comes directly from your marks using the fixed bands above, regardless of the class average.",
-    standingNote: "The minimum passing grade is C (2.0). A CGPA of 3.0 or above is considered good, and 3.5 or above qualifies for the Dean's List and graduation with distinction.",
+    standingNote: "Under the published table, D is worth 1.00 point and F is worth 0.00. Degree-completion and academic-standing requirements can differ by programme, so this calculator does not label a result as an official pass or fail.",
     percentFormula: null,
+    source: {
+      title: "COMSATS notification adopting the HEC grading criteria",
+      url: "https://ww2.comsats.edu.pk/qec/downloads/Notification4304.pdf",
+      reviewed: "12 August 2026",
+      scope: "Used for the grading method, marks bands, and grade-point values effective for Fall 2021 admissions onward."
+    },
     faqs: [
       ["Is this the official COMSATS calculator?", "No. It is an independent student tool and is not affiliated with COMSATS University Islamabad."],
       ["Does COMSATS use absolute or relative grading?", "COMSATS uses absolute grading. Your marks map to a fixed band, so a higher class average does not lower your grade."],
-      ["What is the minimum passing grade at COMSATS?", "C (2.0 grade points), which corresponds to roughly 60% marks under the absolute bands."],
-      ["Does COMSATS use minus grades?", "Yes. COMSATS uses A-, B-, and C- grades, so keep the HEC scale selected in the calculator."],
-      ["What CGPA is good at COMSATS?", "A CGPA above 3.0 is considered good, and 3.5 or above is excellent and Dean's List eligible."]
+      ["What point value does a D carry at COMSATS?", "The published table assigns D 1.00 point for 50–53 marks and F 0.00 below 50. Your programme rules still determine progression and graduation requirements."],
+      ["Does COMSATS use minus grades?", "Yes. The cited COMSATS table includes A-, B-, and C-. Use the COMSATS-specific preset because its 3.66/2.66/1.66 values differ from a common 3.67-style scale."],
+      ["Why might the result differ by 0.01?", "COMSATS publishes 3.66 for A-, 2.66 for B-, and 1.66 for C-. A generic 3.67 scale can produce a slightly different answer, so this page uses the COMSATS-specific values."]
     ]
   },
   {
@@ -300,15 +274,21 @@ const universityData = [
       ["A", 4, "80–100"], ["B+", 3.5, "75–79"], ["B", 3, "70–74"], ["C+", 2.5, "65–69"],
       ["C", 2, "60–64"], ["D+", 1.5, "55–59"], ["D", 1, "50–54"], ["F", 0, "Below 50"]
     ],
-    gradingNote: "International Islamic University Islamabad uses absolute grading with the fixed marks bands above, on a half-point scale with no minus grades. The minimum passing grade is D (50%).",
-    standingNote: "A BS degree requires a minimum CGPA of 2.00. A CGPA around 3.52 or above qualifies for the IIUI Dean's Honor List and strengthens merit-scholarship eligibility.",
+    gradingNote: "International Islamic University Islamabad publishes the absolute grade table above on a half-point scale with no minus grades. The table assigns D (1.00) to 50–54 marks, but programme-specific course-completion and progression requirements can be stricter, so the calculator does not label a result as an official pass or fail.",
+    standingNote: "The undergraduate regulations list 2.00 as the minimum CGPA for award of an undergraduate degree. Programme rules and later amendments remain authoritative.",
     percentFormula: null,
+    source: {
+      title: "IIUI Academic Regulations for Undergraduate Studies (Spring 2024 edition)",
+      url: "https://www.iiu.edu.pk/wp-content/uploads/2025/06/Academic-Regulations-UG-Studies-Spring-2024-03062025.pdf",
+      reviewed: "12 August 2026",
+      scope: "Spring 2024 regulation edition; used for absolute grading, percentage bands, grade points, GPA/CGPA computation, and the undergraduate degree threshold."
+    },
     faqs: [
       ["Is this the official IIUI calculator?", "No. It is an independent student tool and is not affiliated with International Islamic University Islamabad."],
-      ["Does IIUI use minus grades?", "No. IIUI uses a half-point scale (A, B+, B, C+, C, D+, D, F) with no minus grades, so keep the Pakistan no-minus scale selected."],
-      ["What is the passing grade at IIUI?", "D (1.0 grade points), which requires at least 50% marks. Below 50% is an F and the course must be retaken."],
+      ["Does IIUI use minus grades?", "No. The cited IIUI table uses a half-point scale with no minus grades. This page starts with the IIUI-specific preset selected."],
+      ["What does the IIUI table assign at 50%?", "The cited undergraduate table maps 50–54 marks to D (1.00 point). Check your programme's current course-completion requirement before treating that letter as sufficient."],
       ["Is IIUI grading absolute or relative?", "IIUI uses absolute grading, so your grade depends on your own marks rather than the class average."],
-      ["What CGPA do I need for the Dean's Honor List?", "Around 3.52 or above. Always confirm the current threshold with your faculty office."]
+      ["How does IIUI calculate GPA?", "The regulations use the sum of each course's credit hours multiplied by its grade point, divided by the total attempted credit hours."]
     ]
   },
   {
@@ -318,16 +298,22 @@ const universityData = [
     scaleKey: "hec",
     gradeRows: [
       ["A", 4, ""], ["A-", 3.67, ""], ["B+", 3.33, ""], ["B", 3, ""], ["B-", 2.67, ""],
-      ["C+", 2.33, ""], ["C", 2, ""], ["C-", 1.67, ""], ["D+", 1.3, ""], ["D", 1, ""], ["F", 0, ""]
+      ["C+", 2.33, ""], ["C", 2, ""], ["C-", 1.67, ""], ["D+", 1.33, ""], ["D", 1, ""], ["F", 0, ""]
     ],
-    gradingNote: "GIKI generally uses relative grading (a curve). The grade points per letter are fixed, but the marks needed for each grade depend on the class, and an A can start around 85% in many courses. Grades I (Incomplete) and W (Withdrawn) are not counted in GPA.",
+    gradingNote: "GIKI publishes fixed grade points per credit for letter grades, while the course's assessment determines the letter awarded. Because the official academic page does not publish one universal marks cut-off table, enter the letter grade shown in your result. I (Incomplete) and W (Withdrawn) are excluded from GPA.",
     standingNote: "A semester GPA below 2.00 places a student on academic probation, so high-credit courses deserve the most attention.",
     percentFormula: null,
+    source: {
+      title: "GIKI Academic Setup — grading and credit-hour system",
+      url: "https://giki.edu.pk/academics/academic-setup/",
+      reviewed: "12 August 2026",
+      scope: "Used for grade points, credit-hour weighting, treatment of I/W grades, semester load, and academic-standing guidance."
+    },
     faqs: [
       ["Is this the official GIKI calculator?", "No. It is an independent student tool and is not affiliated with the Ghulam Ishaq Khan Institute."],
-      ["Does GIKI use relative grading?", "Yes, in most courses. The marks needed for each grade depend on the class curve, while grade points per letter are fixed."],
+      ["Can I convert GIKI marks to a grade with one table?", "The cited academic page publishes grade points but not a universal percentage cut-off table. Use the letter grade awarded for the course."],
       ["Do I and W grades affect my GIKI GPA?", "No. Incomplete (I) and Withdrawn (W) grades are not counted in the GPA calculation."],
-      ["What marks give an A at GIKI?", "Under relative grading there is no fixed cut-off, but an A often starts around 85% depending on the class."],
+      ["Why should labs be separate?", "GIKI defines theory and laboratory credit hours differently. If a lab has its own grade and credit, entering it separately preserves the correct weight."],
       ["When does GIKI place a student on probation?", "Generally when the semester GPA falls below 2.00. Check the current academic regulations for details."]
     ]
   },
@@ -337,18 +323,25 @@ const universityData = [
     audience: "engineering and science programs",
     scaleKey: "hec",
     gradeRows: [
-      ["A", 4, ""], ["A-", 3.67, ""], ["B+", 3.33, ""], ["B", 3, ""], ["B-", 2.67, ""],
-      ["C+", 2.33, ""], ["C", 2, ""], ["F", 0, ""]
+      ["A+", 4, "85 and above"], ["A", 4, "80–84"], ["A-", 3.67, "75–79"], ["B+", 3.33, "70–74"],
+      ["B", 3, "65–69"], ["B-", 2.67, "60–64"], ["C+", 2.33, "55–59"], ["C", 2, "50–54"],
+      ["D", 1, "45–49"], ["F", 0, "Below 45"]
     ],
-    gradingNote: "PIEAS uses absolute grading on a 4.0 scale. Passing a course effectively requires a C (2.0); some transcripts do not list D or D+ grades, so a C is treated as the practical minimum.",
-    standingNote: "Good standing requires a CGPA of 2.00 or above; below that a student is placed on probation, and repeated probation can lead to being dropped. PhD coursework requires a minimum 3.00 CGPA.",
+    gradingNote: "PIEAS uses the published marks-to-grade table above for BS programmes. A+ and A both earn 4.00 points, and a D remains part of the scale even though the rules set C (2.00) as the minimum passing criterion for an undergraduate course.",
+    standingNote: "The cited BS regulations list 2.00/C as the course minimum and 2.33/C+ as the semester and degree minimum. Use the rule for your intake if a newer revision is issued.",
     percentFormula: null,
+    source: {
+      title: "PIEAS Academic Rules and Regulations for BS Programs (September 2023)",
+      url: "https://admissions.pieas.edu.pk/Academic_Rules/Academic_Rules_for_BS_Programs_for_Intake_Sesions_2022_and_Onward.pdf",
+      reviewed: "12 August 2026",
+      scope: "Applies to BS intake sessions 2022 onward; used for the full marks table, grade points, GPA formula, and course/semester/degree minimum criteria."
+    },
     faqs: [
       ["Is this the official PIEAS calculator?", "No. It is an independent student tool and is not affiliated with PIEAS."],
-      ["What is the minimum passing grade at PIEAS?", "Passing effectively starts at C (2.0 grade points). Confirm your program's exact rule, as some transcripts omit D grades."],
+      ["What is the minimum passing grade at PIEAS?", "The cited BS rules set C (2.00) as the minimum for a course. They set C+ (2.33) as the minimum semester GPA and degree CGPA."],
       ["Does PIEAS use absolute grading?", "Yes. PIEAS uses absolute grading, so your grade comes from your own marks, not the class average."],
-      ["What CGPA keeps me in good standing at PIEAS?", "A CGPA of 2.00 or above. Falling below leads to probation, and repeated probation can lead to being dropped."],
-      ["What CGPA do PhD students need?", "PhD coursework requires a minimum CGPA of 3.00 out of 4.00."]
+      ["Does PIEAS include D in its BS scale?", "Yes. The September 2023 table assigns D 1.00 for 45–49 marks, although C is the minimum passing grade for a course."],
+      ["Why does the PIEAS page need its own preset?", "Its percentage bands differ from generic with-minus scales: for example, A begins at 80 and A+ begins at 85 in the cited BS rules."]
     ]
   },
   {
@@ -357,18 +350,24 @@ const universityData = [
     audience: "campuses and departments",
     scaleKey: "hec",
     gradeRows: [
-      ["A", 4, "85–100"], ["A-", 3.67, ""], ["B+", 3.33, ""], ["B", 3, ""], ["B-", 2.67, ""],
-      ["C+", 2.33, ""], ["C", 2, ""], ["C-", 1.67, ""], ["D+", 1.3, ""], ["D", 1, ""], ["F", 0, "Below 50"]
+      ["A", 4, ""], ["A-", 3.67, ""], ["B+", 3.33, ""], ["B", 3, ""], ["B-", 2.67, ""],
+      ["C+", 2.33, ""], ["C", 2, ""], ["C-", 1.67, ""], ["D", 1, ""], ["F", 0, ""]
     ],
     gradingNote: "Air University uses relative grading when a course has 15 or more students, and absolute grading for smaller classes. The grade points per letter are fixed; the marks needed for each grade depend on the method used in your course.",
-    standingNote: "A minimum CGPA of 2.00 (BS) or 2.50 (MS) is required to graduate, and a passing mark of at least 50% is needed in each course. A semester GPA of 3.50 or above on a full load earns a place on the Dean's Honor List.",
+    standingNote: "The current regulations use relative grading for undergraduate courses, except classes with fewer than 15 students, where the published absolute method applies. The official transcript remains decisive because the marks boundary can vary in a relatively graded class.",
     percentFormula: null,
+    source: {
+      title: "Air University Academic Regulations 2025",
+      url: "https://au.edu.pk/Pages/Academics/assets/forms/AU_Regulation_2025_21_November.pdf",
+      reviewed: "12 August 2026",
+      scope: "Used for the current undergraduate grade points, relative/absolute grading rule, GPA calculation, and excluded special grades."
+    },
     faqs: [
       ["Is this the official Air University calculator?", "No. It is an independent student tool and is not affiliated with Air University."],
       ["Is Air University grading relative or absolute?", "Both. Courses with 15 or more students use relative grading; smaller classes use absolute grading."],
-      ["What CGPA do I need to graduate from Air University?", "A minimum CGPA of 2.00 for BS programs and 2.50 for MS programs."],
-      ["What semester GPA earns the Dean's Honor List?", "A semester GPA of 3.50 or above while taking a full course load."],
-      ["Why is my Air University estimate slightly off?", "Relative grading and rounding can shift the result. Use the HEC scale and your exact credit hours for the closest estimate."]
+      ["Does Air University use D+?", "The 2025 undergraduate grade-point table lists D at 1.00 but does not list D+. This page's source-specific preset follows that table."],
+      ["Do W and I grades count in GPA?", "The regulations treat W as withdrawn and I as incomplete rather than ordinary grade-point grades. Do not enter them as credit-bearing letter grades until an earned grade replaces them."],
+      ["Why is my Air University estimate slightly off?", "Relative grading decides the letter grade in most undergraduate classes. Once you enter the official letter grade and exact credits, the calculator applies the published point value."]
     ]
   },
   {
@@ -377,18 +376,24 @@ const universityData = [
     audience: "engineering departments and campuses",
     scaleKey: "hec",
     gradeRows: [
-      ["A+", 4, ""], ["A", 4, ""], ["A-", 3.67, ""], ["B+", 3.33, ""], ["B", 3, ""], ["B-", 2.67, ""],
-      ["C+", 2.33, ""], ["C", 2, ""], ["C-", 1.67, ""], ["D+", 1.33, ""], ["D", 1, ""], ["F", 0, ""]
+      ["A+", 4, ""], ["A", 4, ""], ["A-", 3.7, ""], ["B+", 3.3, ""], ["B", 3, ""], ["B-", 2.7, ""],
+      ["C+", 2.3, ""], ["C", 2, ""], ["C-", 1.7, ""], ["D+", 1.3, ""], ["D", 1, ""], ["F", 0, ""]
     ],
-    gradingNote: "UET Lahore uses a hybrid system: relative grading (a curve) for theory courses and absolute grading for labs and practicals. An A+ may be awarded above the top threshold and carries the same grade points as an A.",
-    standingNote: "You must score at least a D (about 50%) to pass a course, and keep a CGPA of 2.00 or above to stay in good standing. Withdrawn courses appear as W and are not counted in GPA.",
+    gradingNote: "UET Lahore's undergraduate regulations describe relative letter-grade assignment and publish one-decimal point values. A+ and A both carry 4.0, while A- is 3.7 and B+ is 3.3. This differs slightly from common 3.67/3.33 presets.",
+    standingNote: "D is the lowest passing letter grade in the cited regulations. W, WF, I, and IP do not carry grade points in the published table; confirm repeat and progression effects with the examination office.",
     percentFormula: null,
+    source: {
+      title: "UET Lahore Undergraduate Semester Regulations 2015",
+      url: "https://uet.edu.pk/gallery/UG_Sem_Regulations_2016.pdf",
+      reviewed: "12 August 2026",
+      scope: "Used for the relative-grading method, exact one-decimal grade points, GPA/CGPA formulas, and non-point grades."
+    },
     faqs: [
       ["Is this the official UET calculator?", "No. It is an independent student tool and is not affiliated with UET Lahore or its campuses."],
-      ["Does UET use relative or absolute grading?", "Both. Theory courses are usually graded on a curve, while labs and practicals use absolute grading."],
-      ["Does an A+ count higher than an A at UET?", "No. A+ carries the same grade points as an A, so select A in the calculator for either."],
-      ["What is the passing grade at UET?", "At least a D, which usually means about 50% normalized marks. Withdrawn (W) courses are not counted."],
-      ["What CGPA keeps me in good standing at UET?", "A CGPA of 2.00 or above. Staying on probation for consecutive semesters can lead to being dropped."]
+      ["Does UET use relative grading?", "The cited undergraduate regulations describe a relative process with instructor-set minimum and maximum thresholds. Enter the final awarded letter grade rather than guessing it from marks."],
+      ["Does an A+ count higher than an A at UET?", "No. A+ and A both carry 4.0 points in the cited UET table. The UET-specific preset includes both labels."],
+      ["What is the lowest passing grade at UET?", "D is the lowest passing letter grade in the cited regulations. The relative-grading process means there is not one fixed percentage boundary for every class."],
+      ["Why is a generic calculator slightly different?", "UET publishes A- as 3.7, B+ as 3.3, and B- as 2.7. Generic scales often use 3.67, 3.33, and 2.67; this page uses the UET values."]
     ]
   },
   {
@@ -397,24 +402,32 @@ const universityData = [
     audience: "aerospace, engineering, and space science programs",
     scaleKey: "hec",
     gradeRows: [
-      ["A", 4, "85–100"], ["A-", 3.7, "80–84"], ["B+", 3.3, "75–79"], ["B", 3, "70–74"],
-      ["B-", 2.7, "65–69"], ["C+", 2.3, "61–64"], ["C", 2, "58–60"], ["C-", 1.7, "55–57"],
-      ["D", 1, "50–54"], ["F", 0, "Below 50"]
+      ["A", 4, "85–100"], ["A-", 3.7, "81–84"], ["B+", 3.3, "77–80"], ["B", 3, "73–76"],
+      ["B-", 2.7, "69–72"], ["C+", 2.3, "65–68"], ["C", 2, "61–64"], ["C-", 1.7, "57–60"],
+      ["D+", 1.3, "52–56"], ["D", 1, "50–51"], ["F", 0, "Below 50"]
     ],
-    gradingNote: "The Institute of Space Technology follows the HEC 4.0 scale with the marks bands above. Confirm with your department whether a specific course is graded absolutely or on a curve. IST rounds A- to 3.7 and B+ to 3.3, while this calculator uses the HEC-standard 3.67 and 3.33, so an estimate may differ by a few hundredths.",
-    standingNote: "The minimum passing grade is D (50%), and a CGPA of 2.00 is generally required for good standing.",
+    gradingNote: "IST uses relative grading by default for undergraduate theory courses, so the marks boundary for a letter can move with class performance. Labs and FYP use the published absolute bands shown above. This page uses IST's exact one-decimal point values, including D+ at 1.3, after you enter the letter grade actually awarded.",
+    standingNote: "IST calculates SGPA as the sum of credit hours multiplied by grade points divided by semester credit hours, and calculates CGPA over all taken courses. The current handbook explains separate summer-semester grading and repeat-course treatment, which this current-semester estimate cannot reconstruct automatically.",
     percentFormula: null,
+    source: {
+      title: "IST Undergraduate Student's Handbook 2025",
+      url: "https://oldsite.ist.edu.pk/downloads/Admission/UG-HB-2025.pdf",
+      fallbackTitle: "current IST admissions page",
+      fallbackUrl: "https://www.ist.edu.pk/admission?section=admission-info",
+      reviewed: "12 August 2026",
+      scope: "Used for the default relative-grading rule, absolute lab/FYP marks bands, exact grade points, SGPA/CGPA formula, summer grading, and repeat-course notes."
+    },
     faqs: [
       ["Is this the official IST calculator?", "No. It is an independent student tool and is not affiliated with the Institute of Space Technology."],
-      ["What grade points does IST use?", "IST uses the HEC scale and rounds A- to 3.7 and B+ to 3.3. This calculator uses 3.67 and 3.33, so results can differ by a few hundredths."],
-      ["What is the passing grade at IST?", "D (1.0 grade points), which requires at least 50% marks."],
-      ["Does IST use minus grades?", "Yes. IST awards A-, B-, and C- grades, so keep the HEC scale selected in the calculator."],
-      ["Why is my IST GPA slightly different?", "The small rounding difference between 3.7/3.3 and 3.67/3.33, plus credit-hour entry, explains most gaps. Your transcript is final."]
+      ["What grade points does IST use?", "The IST table uses one-decimal values for several grades: A- is 3.7, B+ is 3.3, B- is 2.7, C+ is 2.3, and C- is 1.7. This page's preset uses those exact values."],
+      ["What does IST assign to D and D+?", "The cited table assigns D+ 1.3 points and D 1.0 point. In the absolute lab/FYP table, D+ covers 52–56 marks and D covers 50–51; relative theory-course boundaries can differ."],
+      ["Does IST use minus and plus grades?", "Yes. The cited IST table includes A-, B+, B-, C+, C-, and D+. This page starts with the IST-specific one-decimal preset selected."],
+      ["Why is my IST GPA slightly different?", "Check that you selected the IST source-specific preset and entered the exact credits. Summer grading and repeated courses have additional rules that a simple current-semester estimate cannot reconstruct automatically."]
     ]
   }
 ];
 
-const universityPages = universityData.map((uni) => ({
+const universityPages = universityData.map((uni, index) => ({
   slug: uni.slug,
   type: "university",
   name: uni.name,
@@ -423,31 +436,37 @@ const universityPages = universityData.map((uni) => ({
   gradingNote: uni.gradingNote,
   standingNote: uni.standingNote,
   percentFormula: uni.percentFormula,
+  source: uni.source,
   title: `${uni.name} GPA Calculator | Semester GPA and CGPA Tool`,
-  description: `Estimate ${uni.name} semester GPA and CGPA with the real grading scale, grade points, and credit hours. Unofficial calculator for Pakistan students.`,
+  description: `Estimate ${uni.name} semester GPA and CGPA with source-reviewed grade points and credit hours. Includes the official reference and limitations.`,
   eyebrow: "University calculator",
   h1: `${uni.name} GPA Calculator`,
   intro: `Use this unofficial ${uni.name} GPA calculator to estimate your semester GPA and updated CGPA using ${uni.name}'s grading scale and your credit hours.`,
   calculatorTitle: `${uni.name} GPA and CGPA estimate`,
-  calculatorText: `Enter your ${uni.name} courses, grades, and credit hours. The scale below is preset to match ${uni.name}; the result is only an estimate, and your official transcript is final.`,
-  scaleIntro: `${uni.name} reports results on a 4.0 grade-point scale. The table below shows the grade points for each letter grade${uni.gradeRows.some((row) => row[2]) ? " and the typical marks range for each" : ""}. Use it alongside the calculator above to estimate your GPA and CGPA.`,
-  workedExample: workedExampleFor(uni.scaleKey),
+  calculatorText: `Enter the letter grades already awarded by ${uni.name} and the exact credit hours. This page starts with the source-reviewed ${uni.name} point values; your official transcript remains final.`,
+  scaleIntro: `${uni.name} reports results on a 4.0 grade-point scale. The table below shows the grade points for each letter grade${uni.gradeRows.some((row) => row[2]) ? " and the published marks band for each" : ""}. Use it alongside the calculator above to estimate your GPA and CGPA.`,
+  workedExample: workedExampleFor(uni, index),
   tipsNote: `Pick the grade scale that matches your result card, enter every current-semester course with its exact credit hours, and keep lab and theory courses on separate rows when they carry separate credits. If your department uses a different grade-point table, treat the result as a planning estimate.`,
   audience: uni.audience,
   faqs: uni.faqs
 }));
 
-function workedExampleFor(scaleKey) {
-  if (scaleKey === "pakistan") {
-    return [
-      "Suppose this semester you take two 3-credit-hour courses and score an A (4.0) in one and a B+ (3.5) in the other. The quality points are (4.0 × 3) + (3.5 × 3) = 12 + 10.5 = 22.5.",
-      "Your semester GPA is 22.5 ÷ 6 = 3.75. If your previous CGPA was 3.20 over 60 completed credit hours, your updated CGPA is ((3.20 × 60) + 22.5) ÷ 66 = 3.25."
-    ];
-  }
+function workedExampleFor(university, index) {
+  const firstGrade = university.gradeRows.find(([grade]) => grade === "A") || university.gradeRows[0];
+  const alternatives = university.gradeRows.filter(([grade, points]) => grade !== firstGrade[0] && grade !== "A+" && points > 0);
+  const secondGrade = alternatives[index % alternatives.length];
+  const firstCredits = 3;
+  const secondCredits = (index % 3) + 1;
+  const firstPoints = firstGrade[1] * firstCredits;
+  const secondPoints = secondGrade[1] * secondCredits;
+  const totalCredits = firstCredits + secondCredits;
+  const totalPoints = firstPoints + secondPoints;
+  const semesterGpa = totalPoints / totalCredits;
+  const updatedCgpa = ((3.2 * 60) + totalPoints) / (60 + totalCredits);
 
   return [
-    "Suppose this semester you take two 3-credit-hour courses and score an A (4.0) in one and a B (3.0) in the other. The quality points are (4.0 × 3) + (3.0 × 3) = 12 + 9 = 21.",
-    "Your semester GPA is 21 ÷ 6 = 3.50. If your previous CGPA was 3.20 over 60 completed credit hours, your updated CGPA is about ((3.20 × 60) + 21) ÷ 66 = 3.23. On this scale a B- would add 2.67 grade points per credit hour and a C- would add 1.67."
+    `On the ${university.name} preset, grade ${firstGrade[0]} (${firstGrade[1].toFixed(2)}) in a ${firstCredits}-credit course and grade ${secondGrade[0]} (${secondGrade[1].toFixed(2)}) in a ${secondCredits}-credit course produce ${firstPoints.toFixed(2)} + ${secondPoints.toFixed(2)} = ${totalPoints.toFixed(2)} quality points.`,
+    `Divide ${totalPoints.toFixed(2)} by ${totalCredits} credits for a semester GPA of ${semesterGpa.toFixed(2)}. With a previous CGPA of 3.20 over 60 credits, the simplified updated estimate is ${updatedCgpa.toFixed(2)} before any university-specific repeat or exclusion rule.`
   ];
 }
 
@@ -511,6 +530,10 @@ function optionalHeadTags() {
   return [verificationMeta(), adsenseSnippet(), analyticsSnippet()].filter(Boolean).join("\n    ");
 }
 
+function nonAdHeadTags() {
+  return [verificationMeta(), analyticsSnippet()].filter(Boolean).join("\n    ");
+}
+
 function faviconTags() {
   return `<link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
@@ -534,7 +557,7 @@ function themeScript() {
 function nav(base) {
   return `<header class="site-header">
       <nav class="nav-shell" aria-label="Main navigation">
-        <a class="brand" href="${base}index.html" aria-label="GPA Calculator Pakistan home">
+        <a class="brand" href="/" aria-label="GPA Calculator Pakistan home">
           <span class="brand-mark" aria-hidden="true">4.0</span>
           <span>GPA Calculator Pakistan</span>
         </a>
@@ -545,13 +568,14 @@ function nav(base) {
         </button>
         <div class="nav-actions" id="primary-nav">
           <div class="nav-links">
-            <a href="${base}index.html#calculator">Calculator</a>
-            <a href="${base}index.html#tools">Tools</a>
-            <a href="${base}index.html#universities">Universities</a>
-            <a href="${base}index.html#guide">Guide</a>
-            <a href="${base}about.html">About</a>
-            <a href="${base}contact.html">Contact</a>
-            <a href="${base}privacy.html">Privacy</a>
+            <a href="/#calculator">Calculator</a>
+            <a href="/#tools">Tools</a>
+            <a href="/#universities">Universities</a>
+            <a href="/#guide">Guide</a>
+            <a href="/methodology.html">Sources</a>
+            <a href="/about.html">About</a>
+            <a href="/contact.html">Contact</a>
+            <a href="/privacy.html">Privacy</a>
           </div>
           <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme">
             <span class="theme-toggle__icon" aria-hidden="true">D</span>
@@ -569,37 +593,43 @@ function footer(base) {
         <p>Unofficial GPA and CGPA tools for students.</p>
       </div>
       <div class="footer-links">
-        <a href="${base}index.html#calculator">Calculator</a>
-        <a href="${base}index.html#tools">Tools</a>
-        <a href="${base}index.html#universities">Universities</a>
-        <a href="${base}about.html">About</a>
-        <a href="${base}contact.html">Contact</a>
-        <a href="${base}privacy.html">Privacy Policy</a>
+        <a href="/#calculator">Calculator</a>
+        <a href="/#tools">Tools</a>
+        <a href="/#universities">Universities</a>
+        <a href="/methodology.html">Methodology &amp; sources</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy Policy</a>
       </div>
     </footer>`;
 }
 
-function adSlot(className = "") {
-  return `<div class="ad-slot ${className}" aria-label="Advertisement placeholder">
-          <span>Advertisement</span>
-        </div>`;
-}
-
 function calculator(page) {
-  const defaultScale = page.scaleKey || "pakistan";
+  const hasSourceScale = page.type === "university";
+  const semesterOnly = page.slug === "semester-gpa-calculator";
+  const defaultScale = hasSourceScale ? "university" : page.scaleKey || "pakistan";
+  const sourceScale = hasSourceScale
+    ? `<script type="application/json" id="page-grade-scale">${escapeJson({
+        label: `${page.name} source-reviewed scale`,
+        note: `${page.name} point values are selected. Source and review date are shown below. Use the letter grade from your official result.`,
+        grades: page.gradeRows.map(([grade, points]) => [grade, points])
+      })}</script>`
+    : "";
   return `<section class="calculator-section" id="calculator" aria-labelledby="calculator-title" data-animate>
         <div class="section-heading">
           <p class="eyebrow">Start calculating</p>
           <h2 id="calculator-title">${page.calculatorTitle}</h2>
           <p>${page.calculatorText}</p>
         </div>
-        <form class="calculator-shell" id="gpa-form" novalidate data-animate data-default-scale="${defaultScale}">
+        <form class="calculator-shell" id="gpa-form" novalidate data-animate data-default-scale="${defaultScale}" data-calculation-mode="${semesterOnly ? "semester" : "cumulative"}">
           <div class="toolbar">
             <div>
               <label for="scale-select">Grade scale</label>
               <select id="scale-select" name="scale">
-                <option value="pakistan">Pakistan 4.0 scale (no minus grades)</option>
-                <option value="hec">HEC 4.0 scale (with minus grades)</option>
+                ${hasSourceScale
+                  ? `<option value="university">${page.name} source-reviewed scale</option>`
+                  : `<option value="pakistan">Common 4.0 scale (no minus grades)</option>
+                <option value="hec">Common 4.0 scale (with minus grades)</option>`}
               </select>
             </div>
             <div class="toolbar-actions">
@@ -610,15 +640,15 @@ function calculator(page) {
           </div>
           <div class="calculator-grid">
             <div class="entry-panel">
-              <div class="previous-grid">
+              <div ${semesterOnly ? "hidden" : 'class="previous-grid"'}>
                 <div>
                   <label for="previous-cgpa">Previous CGPA</label>
                   <input id="previous-cgpa" name="previousCgpa" type="number" min="0" max="4" step="0.01" inputmode="decimal" placeholder="3.20">
                 </div>
                 <div>
-                  <label for="completed-credits">Completed credit hours</label>
-                  <input id="completed-credits" name="completedCredits" type="number" min="0" step="1" inputmode="numeric" placeholder="60" aria-describedby="completed-help">
-                  <small id="completed-help">Credits completed before this semester.</small>
+                  <label for="completed-credits">Credits behind previous CGPA</label>
+                  <input id="completed-credits" name="completedCredits" type="number" min="0" step="0.5" inputmode="decimal" placeholder="60" aria-describedby="completed-help">
+                  <small id="completed-help">Prior credits your transcript used for that CGPA; exclude this semester.</small>
                 </div>
               </div>
               <div class="course-table-wrap">
@@ -630,7 +660,7 @@ function calculator(page) {
                       <th scope="col">Subject</th>
                       <th scope="col">Grade</th>
                       <th scope="col">Credits</th>
-                      <th scope="col">Points</th>
+                      <th scope="col">Quality points</th>
                       <th scope="col"><span class="sr-only">Actions</span></th>
                     </tr>
                   </thead>
@@ -645,42 +675,45 @@ function calculator(page) {
             <aside class="result-panel" aria-labelledby="results-title">
               <p class="eyebrow">Live result</p>
               <h3 id="results-title">Your GPA summary</h3>
-              <div class="score-pair">
+              <div class="score-pair${semesterOnly ? " score-pair-single" : ""}">
                 <div><span>Semester GPA</span><strong id="semester-gpa">0.00</strong></div>
-                <div><span>Updated CGPA</span><strong id="updated-cgpa">0.00</strong></div>
+                <div${semesterOnly ? " hidden" : ""}><span>Updated CGPA</span><strong id="updated-cgpa">&mdash;</strong></div>
               </div>
               <dl class="result-list">
                 <div><dt>Semester credits</dt><dd id="semester-credits">0</dd></div>
-                <div><dt>Grade points</dt><dd id="total-points">0.00</dd></div>
+                <div><dt>Total quality points</dt><dd id="total-points">0.00</dd></div>
                 <div><dt>Courses counted</dt><dd id="courses-counted">0</dd></div>
-                <div><dt>Standing</dt><dd id="standing">Add courses</dd></div>
+                <div><dt>GPA band</dt><dd id="standing">&mdash;</dd></div>
               </dl>
               <div class="formula-box">
-                <strong>CGPA formula</strong>
-                <p>((previous CGPA x completed credits) + current points) / total credits</p>
+                <strong>${semesterOnly ? "Semester GPA formula" : "CGPA formula"}</strong>
+                <p>${semesterOnly ? "total quality points / semester credit hours" : "((previous CGPA x prior GPA credits) + current quality points) / total GPA credits"}</p>
               </div>
               <p class="status-message" id="status-message" role="status" aria-live="polite">Select grades and credit hours to calculate your GPA.</p>
             </aside>
           </div>
         </form>
-        ${adSlot("ad-slot-top")}
+        ${sourceScale}
       </section>`;
 }
 
-function linkGrid(base) {
-  const tools = toolLinks.map(([slug, label]) => `<a class="link-card" href="${base}${slug}/index.html">${label}</a>`).join("\n          ");
-  const universities = universityLinks.map(([slug, label]) => `<a class="link-card" href="${base}${slug}/index.html">${label}</a>`).join("\n          ");
+function linkGrid(page) {
+  const usefulLinks = [
+    ["/", "Main GPA & CGPA calculator", "Compare either common scale and plan an updated CGPA."],
+    ["/semester-gpa-calculator/", "Semester GPA calculator", "Focus on one term and see how credits weight each grade."],
+    ["/methodology.html", "Calculation method & sources", "Check the formula, source register, tests, and limitations."],
+    ["/credit-hours-calculator/", "Credit-hours guide", "Understand quality points, labs, and weighted course loads."],
+    ["/gpa-to-percentage-pakistan/", "GPA-to-percentage guide", "Avoid unsupported one-size-fits-all conversions."]
+  ].filter(([href]) => href !== `/${page.slug}/`);
+  const tools = usefulLinks.slice(0, 4).map(([href, label, description]) => `<a class="link-card" href="${href}"><strong>${label}</strong><span>${description}</span></a>`).join("\n          ");
   return `<section class="content-band" aria-labelledby="related-title" data-animate>
         <div class="section-heading">
           <p class="eyebrow">Related tools</p>
           <h2 id="related-title">Keep exploring GPA calculators</h2>
-          <p>Move between the main calculator, focused student guides, and university-specific estimate pages.</p>
+          <p>Continue with the most relevant calculator or explainer. The full source-reviewed university list is on the homepage.</p>
         </div>
         <div class="link-grid">
           ${tools}
-        </div>
-        <div class="link-grid link-grid-compact">
-          ${universities}
         </div>
       </section>`;
 }
@@ -688,7 +721,7 @@ function linkGrid(base) {
 function gradeScaleTable(page) {
   const hasMarks = page.gradeRows.some((row) => row[2]);
   const head = hasMarks
-    ? `<tr><th scope="col">Grade</th><th scope="col">Grade points</th><th scope="col">Typical marks (%)</th></tr>`
+    ? `<tr><th scope="col">Grade</th><th scope="col">Grade points</th><th scope="col">Published marks (%)</th></tr>`
     : `<tr><th scope="col">Grade</th><th scope="col">Grade points</th></tr>`;
   const rows = page.gradeRows
     .map(([grade, points, marks]) =>
@@ -716,7 +749,7 @@ function universitySections(page) {
           <p>${page.scaleIntro}</p>
         </div>
         ${gradeScaleTable(page)}
-        <p class="ad-note">Grade points are fixed; treat the marks ranges as typical values and confirm them against your official transcript.</p>
+        <p class="table-note">${page.gradeRows.some((row) => row[2]) ? "Marks bands are shown only where they appear in the cited source." : "No marks column is shown because the cited source does not publish one universal percentage cut-off table."}</p>
       </section>
       <section class="content-band" aria-labelledby="guide-title" data-animate>
         <div class="article-grid">
@@ -739,6 +772,15 @@ function universitySections(page) {
             <p>This website is independent and not affiliated with ${page.name} or any university. Always use your official transcript, examination office, or department policy for final GPA and CGPA decisions.</p>
           </aside>
         </div>
+        <aside class="source-card" aria-labelledby="source-title">
+          <div>
+            <p class="eyebrow">Primary reference</p>
+            <h2 id="source-title">Source and review scope</h2>
+            <p>Reviewed by the GPA Calculator Pakistan editorial maintainer on <time datetime="${editorialReviewDate}">${page.source.reviewed}</time> against <a href="${page.source.url}" rel="external">${page.source.title}</a>${page.source.fallbackUrl ? `. If that document host is temporarily unavailable, use the <a href="${page.source.fallbackUrl}" rel="external">${page.source.fallbackTitle}</a>.` : "."}</p>
+            <p>${page.source.scope}</p>
+          </div>
+          <p class="source-caveat"><strong>Check before a final decision:</strong> universities can amend rules by intake, campus, department, or programme. Send a correction if the linked source has been replaced.</p>
+        </aside>
       </section>`;
 }
 
@@ -758,7 +800,50 @@ function sectionCards(page) {
             <p>This website is independent and not affiliated with any university. Always use your official transcript, examination office, or department policy for final GPA and CGPA decisions.</p>
           </aside>
         </div>
+        ${sourceList(page)}
       </section>`;
+}
+
+function sourceList(page) {
+  if (!page.sources || page.sources.length === 0) {
+    return "";
+  }
+
+  const items = page.sources.map(([title, url, scope]) => {
+    const rel = /^https?:/.test(url) ? ' rel="external"' : "";
+    return `<li><a href="${url}"${rel}>${title}</a><span>${scope}</span></li>`;
+  }).join("\n              ");
+
+  return `<aside class="source-card source-card-list" aria-labelledby="page-sources-title">
+          <div>
+            <p class="eyebrow">References</p>
+            <h2 id="page-sources-title">Sources and method</h2>
+            <p>Reviewed on <time datetime="${editorialReviewDate}">12 August 2026</time>. These links support the policy context; the calculator remains an independent planning tool.</p>
+          </div>
+          <ul>
+              ${items}
+          </ul>
+        </aside>`;
+}
+
+function pageHighlights(page) {
+  if (page.type === "university") {
+    return [
+      [String(page.gradeRows.length), "published grades"],
+      ["Exact", "page preset"],
+      ["Source", "linked below"]
+    ];
+  }
+
+  if (page.slug === "gpa-to-percentage-pakistan") {
+    return [["No", "universal formula"], ["2", "primary sources"], ["Safe", "decision path"]];
+  }
+
+  if (page.slug === "credit-hours-calculator") {
+    return [["4(3-1)", "notation explained"], ["Weighted", "quality points"], ["2", "primary sources"]];
+  }
+
+  return [["4.0", "scale focus"], ["30", "course rows"], ["Free", "no signup"]];
 }
 
 function faqSection(page) {
@@ -792,6 +877,7 @@ function pageTemplate(page) {
   const canonicalUrl = `${domain}/${page.slug}/`;
   const isCalculator = page.type !== "guide";
   const isUniversity = page.type === "university";
+  const highlights = pageHighlights(page);
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -812,9 +898,6 @@ function pageTemplate(page) {
     <link rel="canonical" href="${canonicalUrl}">
     ${faviconTags()}
     ${optionalHeadTags()}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     ${themeScript()}
     <link rel="stylesheet" href="${base}styles.css">
     <script type="application/ld+json">
@@ -827,6 +910,9 @@ function pageTemplate(page) {
         headline: !isCalculator ? page.h1 : undefined,
         description: page.description,
         url: canonicalUrl,
+        dateModified: editorialReviewDate,
+        author: { "@type": "Organization", name: "GPA Calculator Pakistan", url: domain },
+        publisher: { "@type": "Organization", name: "GPA Calculator Pakistan", url: domain },
         offers: isCalculator ? { "@type": "Offer", price: "0", priceCurrency: "USD" } : undefined
       })}
     </script>
@@ -842,22 +928,18 @@ function pageTemplate(page) {
           <h1 id="page-title">${page.h1}</h1>
           <p>${page.intro}</p>
           <div class="hero-actions" aria-label="Primary actions">
-            ${isCalculator ? '<button class="button button-primary" type="button" id="hero-sample"><span aria-hidden="true">+</span>Load sample</button>' : `<a class="button button-primary" href="${base}index.html#calculator"><span aria-hidden="true">+</span>Open calculator</a>`}
+            ${isCalculator ? '<button class="button button-primary" type="button" id="hero-sample"><span aria-hidden="true">+</span>Load sample</button>' : '<a class="button button-primary" href="/#calculator"><span aria-hidden="true">+</span>Open calculator</a>'}
             <a class="button button-ghost" href="#guide-title">Read guide</a>
           </div>
         </div>
         <aside class="quick-stats" aria-label="Page highlights">
-          <div><strong>4.0</strong><span>scale focus</span></div>
-          <div><strong>30</strong><span>course rows</span></div>
-          <div><strong>Free</strong><span>student tool</span></div>
+          ${highlights.map(([value, label]) => `<div><strong>${value}</strong><span>${label}</span></div>`).join("\n          ")}
         </aside>
       </section>
-      ${isCalculator ? calculator(page) : adSlot("ad-slot-top")}
+      ${isCalculator ? calculator(page) : ""}
       ${isUniversity ? universitySections(page) : sectionCards(page)}
-      ${adSlot("ad-slot-middle")}
-      ${linkGrid(base)}
+      ${linkGrid(page)}
       ${faqSection(page)}
-      ${adSlot("ad-slot-lower")}
     </main>
     ${footer(base)}
     <script src="${base}script.js"></script>
@@ -886,10 +968,7 @@ function trustPage({ file, title, description, h1, eyebrow, body, pageSlug }) {
     <meta name="twitter:image" content="${domain}/og-image.png">
     <link rel="canonical" href="${canonicalUrl}">
     ${faviconTags()}
-    ${optionalHeadTags()}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    ${nonAdHeadTags()}
     ${themeScript()}
     <link rel="stylesheet" href="styles.css">
   </head>
@@ -920,7 +999,7 @@ function trustPage({ file, title, description, h1, eyebrow, body, pageSlug }) {
 function writeFile(relativePath, content) {
   const target = path.join(root, relativePath);
   fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.writeFileSync(target, content, "utf8");
+  fs.writeFileSync(target, content.replace(/[ \t]+$/gm, ""), "utf8");
 }
 
 allPages.forEach((page) => {
@@ -938,18 +1017,24 @@ writeFile(
     pageSlug: "about",
     body: `<article class="content-card">
             <h2>Why this site exists</h2>
-            <p>GPA Calculator Pakistan is built to help students quickly estimate semester GPA, updated CGPA, credit-hour impact, and GPA-related questions.</p>
-            <p>The site focuses on practical calculator tools and plain-English explanations for Pakistan university students.</p>
+            <p>GPA Calculator Pakistan is an independent project built for students who need to check semester GPA, estimate an updated CGPA, and understand how credit hours change the result.</p>
+            <p>The arithmetic runs in the browser. No account is required, and course entries are not sent to a database.</p>
           </article>
           <article class="content-card">
-            <h2>Accurate, university-specific scales</h2>
-            <p>Each university page is set to the grading scale that university actually uses, including whether it relies on minus grades or relative grading, so the estimate is as close as a calculator can get.</p>
-            <p>We research grading scales from official regulations and reputable references, and we keep clear warnings that the official transcript is final.</p>
+            <h2>How university pages are checked</h2>
+            <p>University-specific pages use the grade-point table in the primary source linked on that page. The source title, scope, and manual review date are shown beside the guidance instead of being hidden in code.</p>
+            <p>Where a university publishes grade points but no universal marks cut-offs, the page leaves the marks column blank and tells students to enter the letter grade already awarded.</p>
           </article>
           <article class="content-card">
             <h2>Independent and unofficial</h2>
             <p>This website is not affiliated with NUST, FAST, COMSATS, IIUI, GIKI, PIEAS, Air University, UET, IST, or any other university.</p>
             <p>Every calculator result should be treated as an estimate. Official transcripts, result portals, and academic offices are the final source.</p>
+          </article>
+          <article class="content-card content-card-wide">
+            <h2>Corrections and accountability</h2>
+            <p>The GPA Calculator Pakistan editorial maintainer is responsible for source reviews and calculator corrections. Review dates are recorded on the relevant pages, and the maintainer can be reached at <a href="mailto:${escapeHtml(launchConfig.contactEmail)}">${escapeHtml(launchConfig.contactEmail)}</a>.</p>
+            <p>Academic regulations change. A useful correction includes the affected page, programme or intake, the disputed sentence or grade point, and a current official university URL. Corrections can be sent to <a href="mailto:${escapeHtml(launchConfig.contactEmail)}">${escapeHtml(launchConfig.contactEmail)}</a>.</p>
+            <p>Read the <a href="/methodology.html">methodology and source register</a> for the calculation formula, test cases, source hierarchy, review date, and known limitations.</p>
           </article>`
   })
 );
@@ -967,6 +1052,7 @@ writeFile(
             <h2>Correction requests</h2>
             <p>If you notice a confusing formula, broken link, spelling issue, or university page that needs clearer wording, contact the site owner before relying on the result.</p>
             ${contactChannel()}
+            <p>Please include the page URL, programme or intake when relevant, the value that appears wrong, and a link to the current official regulation. Do not attach a full transcript.</p>
           </article>
           <article class="content-card">
             <h2>Privacy questions</h2>
@@ -981,8 +1067,72 @@ writeFile(
   })
 );
 
+const sourceRegisterRows = universityData.map((university) => `<tr>
+              <th scope="row"><a href="/${university.slug}/">${university.name}</a></th>
+              <td><a href="${university.source.url}" rel="external">${university.source.title}</a>${university.source.fallbackUrl ? `<br><a href="${university.source.fallbackUrl}" rel="external">Fallback: ${university.source.fallbackTitle}</a>` : ""}</td>
+              <td>${university.source.scope}</td>
+            </tr>`).join("\n            ");
+
+writeFile(
+  "methodology.html",
+  trustPage({
+    file: "methodology.html",
+    title: "Methodology & Sources | GPA Calculator Pakistan",
+    description: "See how GPA Calculator Pakistan calculates results, selects university sources, tests grade scales, and handles corrections and limitations.",
+    h1: "Methodology & Sources",
+    eyebrow: "Editorial standards",
+    pageSlug: "methodology",
+    body: `<article class="content-card">
+            <h2>Calculation method</h2>
+            <p>For every entered course, quality points equal grade points multiplied by credit hours. Semester GPA equals total quality points divided by total attempted semester credits.</p>
+            <p>Updated CGPA is estimated as ((previous CGPA × the earlier GPA-bearing credits used for that CGPA) + current quality points) ÷ (earlier GPA credits + current GPA credits). Calculations use full precision internally and display two decimals.</p>
+          </article>
+          <article class="content-card">
+            <h2>Source hierarchy</h2>
+            <p>Current official university regulations, handbooks, and registrar notifications come first. An official university academic page is used when a current document is not public. Secondary calculator sites are not accepted as evidence for a grade scale.</p>
+            <p>If a source does not publish fixed percentage bands, this site does not invent them. A blank marks column means students should use the letter grade on the official result.</p>
+          </article>
+          <article class="content-card">
+            <h2>Review ownership</h2>
+            <p>The GPA Calculator Pakistan editorial maintainer owns the source checks and calculator corrections recorded here. Questions and evidence-backed corrections can be sent to <a href="mailto:${escapeHtml(launchConfig.contactEmail)}">${escapeHtml(launchConfig.contactEmail)}</a>.</p>
+          </article>
+          <article class="content-card">
+            <h2>What the estimate cannot know</h2>
+            <p>A simple calculator cannot automatically reconstruct repeat-course replacement, excluded W/I grades, transfer credits, cohort exceptions, relative-grading boundaries, or a department's rounding procedure.</p>
+            <p>That is why each university page identifies its source scope and sends students back to the examination office for a final decision.</p>
+          </article>
+          <article class="content-card content-card-wide">
+            <h2>Verification checklist</h2>
+            <ul>
+              <li>Each source-specific preset contains exactly the grades and point values shown in its visible table.</li>
+              <li>Worked examples are checked with the same weighted-average formula used by the calculator.</li>
+              <li>Zero-point F grades remain valid courses when credits are entered.</li>
+              <li>Negative credits, out-of-range CGPA, and incomplete previous-record pairs are rejected.</li>
+              <li>Official source links and calculator behavior are rechecked when a correction is received or a newer regulation is found.</li>
+            </ul>
+          </article>
+          <article class="content-card content-card-wide">
+            <h2>University source register</h2>
+            <p>Last manual review: <time datetime="${editorialReviewDate}">12 August 2026</time>. A linked policy may later be replaced; the university's current publication always wins.</p>
+            <div class="source-table-wrap">
+              <table class="source-table">
+                <thead><tr><th scope="col">Page</th><th scope="col">Primary source</th><th scope="col">What was checked</th></tr></thead>
+                <tbody>
+            ${sourceRegisterRows}
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <aside class="disclaimer-box content-card-wide">
+            <strong>Corrections</strong>
+            <p>Send the page URL, programme or intake, disputed value, and a current official source to <a href="mailto:${escapeHtml(launchConfig.contactEmail)}">${escapeHtml(launchConfig.contactEmail)}</a>. Do not send a roll number, password, CNIC, or full transcript.</p>
+          </aside>`
+  })
+);
+
 const sitemapUrls = [
   ["/", "1.0"],
+  ["/methodology.html", "0.6"],
   ["/about.html", "0.4"],
   ["/contact.html", "0.4"],
   ["/privacy.html", "0.4"],
@@ -996,7 +1146,6 @@ writeFile(
 ${hasRealDomain ? "" : "  <!-- Replace https://your-domain.com with your real domain before submitting to Search Console. -->\n"}${sitemapUrls
   .map(([urlPath, priority]) => `  <url>
     <loc>${domain}${urlPath}</loc>
-    <lastmod>${buildDate}</lastmod>
     <priority>${priority}</priority>
   </url>`)
   .join("\n")}
@@ -1013,4 +1162,4 @@ Sitemap: ${domain}/sitemap.xml
 `
 );
 
-console.log(`Generated ${allPages.length + 2} hub pages, sitemap.xml, and robots.txt`);
+console.log(`Generated ${allPages.length + 3} hub pages, sitemap.xml, and robots.txt`);

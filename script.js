@@ -133,9 +133,114 @@
     });
   }
 
+  function setupTargetPlanner() {
+    const planner = document.getElementById("target-planner-form");
+
+    if (!planner) {
+      return;
+    }
+
+    const currentInput = document.getElementById("planner-current-cgpa");
+    const completedInput = document.getElementById("planner-completed-credits");
+    const plannedInput = document.getElementById("planner-planned-credits");
+    const targetInput = document.getElementById("planner-target-cgpa");
+    const requiredNode = document.getElementById("planner-required-gpa");
+    const messageNode = document.getElementById("planner-message");
+
+    function plannerNumber(input) {
+      if (!input || input.value.trim() === "") {
+        return null;
+      }
+
+      const value = Number(input.value);
+      return Number.isFinite(value) ? value : null;
+    }
+
+    function clearPlannerErrors() {
+      [currentInput, completedInput, plannedInput, targetInput].forEach(function (input) {
+        input.removeAttribute("aria-invalid");
+      });
+      messageNode.classList.remove("has-error", "has-warning", "has-success");
+    }
+
+    function plannerError(input, message) {
+      input.setAttribute("aria-invalid", "true");
+      requiredNode.textContent = "—";
+      messageNode.textContent = message;
+      messageNode.classList.add("has-error");
+    }
+
+    function updatePlanner() {
+      clearPlannerErrors();
+
+      const current = plannerNumber(currentInput);
+      const completed = plannerNumber(completedInput);
+      const planned = plannerNumber(plannedInput);
+      const target = plannerNumber(targetInput);
+
+      if ([current, completed, planned, target].every(function (value) { return value === null; })) {
+        requiredNode.textContent = "—";
+        messageNode.textContent = "Enter your current record, planned credits, and target CGPA.";
+        return;
+      }
+
+      if (current === null || current < 0 || current > 4) {
+        plannerError(currentInput, "Current CGPA must be between 0.00 and 4.00.");
+        return;
+      }
+
+      if (completed === null || completed <= 0) {
+        plannerError(completedInput, "Credits behind the current CGPA must be greater than zero.");
+        return;
+      }
+
+      if (planned === null || planned <= 0) {
+        plannerError(plannedInput, "Planned credit hours must be greater than zero.");
+        return;
+      }
+
+      if (target === null || target < 0 || target > 4) {
+        plannerError(targetInput, "Target CGPA must be between 0.00 and 4.00.");
+        return;
+      }
+
+      const required = ((target * (completed + planned)) - (current * completed)) / planned;
+      const maximumCgpa = ((current * completed) + (4 * planned)) / (completed + planned);
+
+      if (required > 4) {
+        requiredNode.textContent = "> 4.00";
+        messageNode.classList.add("has-warning");
+
+        if (target < 4 && target > current) {
+          const minimumCredits = Math.ceil((completed * (target - current)) / (4 - target));
+          messageNode.textContent = "Not reachable in " + planned + " credits. Even a 4.00 would produce about " + maximumCgpa.toFixed(2) + ". You would need at least " + minimumCredits + " credits at 4.00 under this simplified model.";
+        } else {
+          messageNode.textContent = "That target is not mathematically reachable in the planned credits. A 4.00 semester would produce about " + maximumCgpa.toFixed(2) + ".";
+        }
+        return;
+      }
+
+      if (required <= 0) {
+        requiredNode.textContent = "0.00";
+        messageNode.classList.add("has-success");
+        messageNode.textContent = "The target remains reachable even with a 0.00 over the planned credits under this simplified model. Use your university's progression rules as the real limit.";
+        return;
+      }
+
+      requiredNode.textContent = required.toFixed(2);
+      messageNode.classList.add(required <= 4 ? "has-success" : "has-warning");
+      messageNode.textContent = "Average at least " + required.toFixed(2) + " across the next " + planned + " credits to finish near " + target.toFixed(2) + ". This assumes no repeat-course replacement or excluded credits.";
+    }
+
+    planner.addEventListener("input", updatePlanner);
+    planner.addEventListener("change", updatePlanner);
+    updatePlanner();
+  }
+
   setupTheme();
   setupNavigation();
   setupRevealAnimations();
+  setupTargetPlanner();
 
   const form = document.getElementById("gpa-form");
 
@@ -145,11 +250,12 @@
 
   const MAX_ROWS = 30;
   const INITIAL_ROWS = 8;
+  const isSemesterOnly = form.dataset.calculationMode === "semester";
 
   const scales = {
     pakistan: {
-      label: "Pakistan 4.0 scale (no minus grades)",
-      note: "This 4.0 scale uses half-point steps and no minus grades (A, B+, B, C+, C, D+, D, F). NUST and IIUI use this style. Always compare the scale with your official transcript rules.",
+      label: "Common 4.0 scale (no minus grades)",
+      note: "This common preset uses half-point steps and no minus grades (A, B+, B, C+, C, D+, D, F). It is not a universal Pakistan standard; compare every point with your transcript or use a source-reviewed university page.",
       grades: [
         ["A", 4],
         ["B+", 3.5],
@@ -162,8 +268,8 @@
       ]
     },
     hec: {
-      label: "HEC 4.0 scale (with minus grades)",
-      note: "This HEC-style 4.0 scale includes minus grades (A-, B-, C-). COMSATS, FAST, GIKI, PIEAS, Air, UET, and IST use this style. Always compare the scale with your official transcript rules.",
+      label: "Common 4.0 scale (with minus grades)",
+      note: "This common preset uses 3.67/3.33-style minus and plus grades. Universities can use 3.66, 3.7, omit grades, or set different bands, so compare it with your transcript or use a source-reviewed university page.",
       grades: [
         ["A", 4],
         ["A-", 3.67],
@@ -179,6 +285,27 @@
       ]
     }
   };
+
+  const pageScaleNode = document.getElementById("page-grade-scale");
+
+  if (pageScaleNode) {
+    try {
+      const pageScale = JSON.parse(pageScaleNode.textContent);
+      const hasValidGrades = Array.isArray(pageScale.grades) && pageScale.grades.every(function (grade) {
+        return Array.isArray(grade) && typeof grade[0] === "string" && Number.isFinite(grade[1]);
+      });
+
+      if (hasValidGrades) {
+        scales.university = {
+          label: String(pageScale.label || "University scale"),
+          note: String(pageScale.note || "Source-reviewed university grade points are selected."),
+          grades: pageScale.grades
+        };
+      }
+    } catch (error) {
+      scales.university = undefined;
+    }
+  }
 
   const defaultScale =
     form.dataset.defaultScale && scales[form.dataset.defaultScale]
@@ -262,9 +389,9 @@
     return (
       '<tr data-row="' + index + '">' +
       '<td class="row-number">' + (index + 1) + "</td>" +
-      '<td><input type="text" class="course-subject" placeholder="Course name" value="' + subject + '"></td>' +
+      '<td><input type="text" class="course-subject" placeholder="Course name" value="' + subject + '" aria-label="Subject name for course ' + (index + 1) + '"></td>' +
       '<td><select class="course-grade" aria-label="Grade for course ' + (index + 1) + '">' + createGradeOptions(grade) + "</select></td>" +
-      '<td><input type="number" class="course-credits" min="0" step="1" inputmode="numeric" placeholder="3" value="' + credits + '" aria-label="Credit hours for course ' + (index + 1) + '"></td>' +
+      '<td><input type="number" class="course-credits" min="0" step="0.5" inputmode="decimal" placeholder="3" value="' + credits + '" aria-label="Credit hours for course ' + (index + 1) + '"></td>' +
       '<td><span class="row-points">0.00</span></td>' +
       '<td><button class="button button-danger remove-row" type="button" aria-label="Remove course ' + (index + 1) + '">x</button></td>' +
       "</tr>"
@@ -275,6 +402,7 @@
     Array.from(rowsBody.querySelectorAll("tr")).forEach(function (row, index) {
       row.dataset.row = String(index);
       row.querySelector(".row-number").textContent = String(index + 1);
+      row.querySelector(".course-subject").setAttribute("aria-label", "Subject name for course " + (index + 1));
       row.querySelector(".course-grade").setAttribute("aria-label", "Grade for course " + (index + 1));
       row.querySelector(".course-credits").setAttribute("aria-label", "Credit hours for course " + (index + 1));
       row.querySelector(".remove-row").setAttribute("aria-label", "Remove course " + (index + 1));
@@ -327,28 +455,28 @@
     });
   }
 
-  function standingFor(gpa) {
-    if (!Number.isFinite(gpa) || gpa <= 0) {
-      return "Add courses";
+  function bandFor(gpa, coursesCounted) {
+    if (!coursesCounted || !Number.isFinite(gpa)) {
+      return "—";
     }
 
     if (gpa >= 3.7) {
-      return "Excellent";
+      return "3.70–4.00";
     }
 
     if (gpa >= 3.3) {
-      return "Very good";
+      return "3.30–3.69";
     }
 
     if (gpa >= 3) {
-      return "Good";
+      return "3.00–3.29";
     }
 
     if (gpa >= 2) {
-      return "Needs focus";
+      return "2.00–2.99";
     }
 
-    return "At risk";
+    return "0.00–1.99";
   }
 
   function setStatus(message, tone) {
@@ -360,7 +488,15 @@
   function clearInvalidRows() {
     Array.from(rowsBody.querySelectorAll("tr")).forEach(function (row) {
       row.classList.remove("is-invalid");
+      row.querySelector(".course-grade").removeAttribute("aria-invalid");
+      row.querySelector(".course-credits").removeAttribute("aria-invalid");
     });
+  }
+
+  function markInvalid(row) {
+    row.classList.add("is-invalid");
+    row.querySelector(".course-grade").setAttribute("aria-invalid", "true");
+    row.querySelector(".course-credits").setAttribute("aria-invalid", "true");
   }
 
   function calculate() {
@@ -377,29 +513,29 @@
       const credits = parseNumber(creditInput.value);
       const pointsNode = row.querySelector(".row-points");
       const hasGrade = grade !== "";
-      const hasCredits = credits !== null && credits > 0;
+      const hasCreditValue = credits !== null;
 
       pointsNode.textContent = "0.00";
 
-      if (!hasGrade && !hasCredits) {
+      if (!hasGrade && !hasCreditValue) {
         return;
       }
 
-      if (hasGrade && !hasCredits) {
-        row.classList.add("is-invalid");
+      if (hasCreditValue && credits <= 0) {
+        markInvalid(row);
+        warnings.push(credits < 0 ? "Credit hours cannot be negative." : "Credit hours must be greater than zero.");
+        return;
+      }
+
+      if (hasGrade && !hasCreditValue) {
+        markInvalid(row);
         warnings.push("Add credit hours for every selected grade.");
         return;
       }
 
-      if (!hasGrade && hasCredits) {
-        row.classList.add("is-invalid");
+      if (!hasGrade && hasCreditValue) {
+        markInvalid(row);
         warnings.push("Select a grade for every course with credit hours.");
-        return;
-      }
-
-      if (credits < 0) {
-        row.classList.add("is-invalid");
-        warnings.push("Credit hours cannot be negative.");
         return;
       }
 
@@ -414,45 +550,49 @@
     const semesterGpa = semesterCredits > 0 ? totalPoints / semesterCredits : 0;
     const previousCgpa = parseNumber(previousCgpaInput.value);
     const completedCredits = parseNumber(completedCreditsInput.value);
-    let updatedCgpa = semesterGpa;
+    let updatedCgpa = null;
 
     if (previousCgpa !== null && (previousCgpa < 0 || previousCgpa > 4)) {
       warnings.push("Previous CGPA should be between 0 and 4.");
     }
 
     if (completedCredits !== null && completedCredits < 0) {
-      warnings.push("Completed credit hours cannot be negative.");
+      warnings.push("Credits behind the previous CGPA cannot be negative.");
     }
 
-    if (
+    const hasValidPreviousRecord =
       previousCgpa !== null &&
       completedCredits !== null &&
       previousCgpa >= 0 &&
       previousCgpa <= 4 &&
-      completedCredits > 0 &&
-      semesterCredits > 0
-    ) {
+      completedCredits > 0;
+
+    if (hasValidPreviousRecord && semesterCredits > 0) {
       updatedCgpa = ((previousCgpa * completedCredits) + totalPoints) / (completedCredits + semesterCredits);
     } else if (
-      (previousCgpa !== null && completedCredits === null) ||
-      (previousCgpa === null && completedCredits !== null && completedCredits > 0)
+      previousCgpa !== null ||
+      (completedCredits !== null && completedCredits > 0)
     ) {
-      warnings.push("Enter both previous CGPA and completed credit hours for updated CGPA.");
+      if (!hasValidPreviousRecord) {
+        warnings.push("Enter a valid previous CGPA and the positive GPA-credit total used for it.");
+      }
     }
 
     resultNodes.semesterGpa.textContent = formatNumber(semesterGpa, 2);
-    resultNodes.updatedCgpa.textContent = formatNumber(updatedCgpa, 2);
+    resultNodes.updatedCgpa.textContent = updatedCgpa === null ? "—" : formatNumber(updatedCgpa, 2);
     resultNodes.semesterCredits.textContent = formatNumber(semesterCredits, semesterCredits % 1 === 0 ? 0 : 1);
     resultNodes.totalPoints.textContent = formatNumber(totalPoints, 2);
     resultNodes.coursesCounted.textContent = String(coursesCounted);
-    resultNodes.standing.textContent = standingFor(semesterGpa);
+    resultNodes.standing.textContent = bandFor(semesterGpa, coursesCounted);
 
     if (warnings.length > 0) {
       setStatus(warnings[0], warnings[0].includes("cannot") || warnings[0].includes("between") ? "error" : "warning");
     } else if (coursesCounted === 0) {
       setStatus("Select grades and credit hours to calculate your GPA.", "");
-    } else if (previousCgpa === null && (completedCredits === null || completedCredits === 0)) {
-      setStatus("Semester GPA calculated. Add previous CGPA and completed credits for updated CGPA.", "");
+    } else if (isSemesterOnly) {
+      setStatus("Semester GPA calculated.", "");
+    } else if (!hasValidPreviousRecord) {
+      setStatus("Semester GPA calculated. Add previous CGPA and the prior credits used for it to estimate updated CGPA.", "");
     } else {
       setStatus("GPA and CGPA updated.", "");
     }
@@ -465,7 +605,7 @@
         courses_counted: coursesCounted,
         semester_credits: semesterCredits,
         semester_gpa: Number(formatNumber(semesterGpa, 2)),
-        has_previous_cgpa: previousCgpa !== null && completedCredits !== null && completedCredits > 0
+        has_previous_cgpa: hasValidPreviousRecord
       });
     }
   }
@@ -487,8 +627,8 @@
   function fillSample() {
     rowsBody.innerHTML = "";
     scaleSelect.value = defaultScale;
-    previousCgpaInput.value = "3.20";
-    completedCreditsInput.value = "60";
+    previousCgpaInput.value = isSemesterOnly ? "" : "3.20";
+    completedCreditsInput.value = isSemesterOnly ? "" : "60";
     renderScaleTable();
 
     addRow({ subject: "Programming Fundamentals", grade: "A", credits: "3" });

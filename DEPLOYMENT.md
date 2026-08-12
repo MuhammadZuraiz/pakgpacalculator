@@ -1,18 +1,17 @@
 # Deployment Checklist
 
-This is a no-build static site. Deploy the whole folder to Netlify, then connect a real domain before submitting the sitemap or applying for AdSense.
+This is a no-build static site. Deploy the whole folder to Netlify and verify the published routes before submitting the sitemap or requesting an AdSense review.
 
-## Domain and AdSense Timing (read first)
+## Domain and review timing
 
-- **Buy a cheap custom domain up front, before the site is publicly indexed.** Pakistan falls under AdSense's ~6-month site-age rule, so the aging clock and your indexed URLs should live on the final domain from day one. Launching on a free `*.netlify.app` subdomain and migrating later wastes aging time and SEO equity.
-- Use `*.netlify.app` only as a private staging/preview URL, not as the public address.
-- **Cheapest paths:** GitHub Student Developer Pack (free `.me`/`.tech` for a year via Namecheap), Cloudflare Registrar (at-cost `.com`), or Porkbun/Namecheap promos. Avoid Freenom (`.tk/.ml`) and `.pk` (expensive). Prefer a keyword `.com` such as `gpacalculatorpakistan.com`.
-- **Sequence:** buy domain → launch on it → submit sitemap → build organic traffic for ~6 months → apply to AdSense once there is real crawl history and steady traffic.
+- A custom domain can help branding, but AdSense does not publish a universal minimum traffic, word-count, article-count, or site-age threshold.
+- Keep one stable canonical hostname. If you add a custom domain, update `site.config.json`, regenerate the pages, redirect the old hostname, and resubmit the sitemap.
+- Request review only after the deployed site is complete, crawlable, source-checked, and free of empty, test, or dead-end ad screens.
 
-## Before Public Launch
+## Before public launch
 
-1. Buy or choose the real domain.
-2. Create a real owner contact email for that domain.
+1. Choose the final public hostname.
+2. Confirm the published contact email is monitored.
 3. Confirm Node.js is available:
 
 ```powershell
@@ -33,32 +32,29 @@ Optional tracking values can be added at the same time:
 node tools/configure-launch.cjs --site-url=https://your-real-domain.com --contact-email=hello@your-real-domain.com --ga4=G-XXXXXXXXXX --search-console=YOUR_GOOGLE_VERIFICATION_TOKEN
 ```
 
-The script updates `site.config.json`, regenerates the hub pages, writes `robots.txt` plus `sitemap.xml`, and injects optional GA4/Search Console tags into the manual pages.
+The script updates `site.config.json`, regenerates the hub pages, writes `robots.txt` plus `sitemap.xml`, and injects optional tags into the manual pages. If you do not use Node, update the domain in those files and in canonical metadata manually, then verify every generated page.
 
-If you do not want to use Node, manually replace `https://your-domain.com` in `site.config.json`, `robots.txt`, and `sitemap.xml`, then replace the launch note in `contact.html` with a real email address.
+## Netlify steps
 
-## Netlify Steps
+1. Upload this whole folder to Netlify Drop or connect the repository to a Netlify site.
+2. Confirm the public URL loads over HTTPS.
+3. Test `/`, `/nust-gpa-calculator/`, `/semester-gpa-calculator/`, `/methodology.html`, `/privacy.html`, `/robots.txt`, and `/sitemap.xml`.
+4. If using a custom domain, add it in Netlify and update DNS using the values Netlify provides.
+5. Re-run the launch configuration with the final hostname and redeploy.
+6. Add the site to Google Search Console and submit its `/sitemap.xml` URL.
+7. Request an AdSense review only after the live site has complete original guidance, working calculators, primary sources, trust pages, and a contact channel.
 
-1. Upload this whole folder to Netlify Drop or a Netlify site.
-2. Confirm the temporary `.netlify.app` URL loads.
-3. Test `/`, `/nust-gpa-calculator/`, `/cgpa-calculator-pakistan/`, `/privacy.html`, `/robots.txt`, and `/sitemap.xml`.
-4. Add the custom domain in Netlify.
-5. Update DNS records at the domain registrar using the values Netlify gives you.
-6. Wait for HTTPS to become active.
-7. Re-run the launch config command with the final domain and redeploy.
-8. Add the site to Google Search Console and submit `https://your-real-domain.com/sitemap.xml`.
-9. Add GA4 if you want traffic and calculator event tracking.
-10. Apply for AdSense only after the live site has real pages, trust pages, a contact channel, and some crawl history.
-
-## AdSense Guardrails
+## AdSense guardrails
 
 - Keep calculator controls free from ads.
-- Keep placeholder labels as `Advertisement` until real AdSense code is approved.
+- Do not add empty advertisement placeholders before approval.
 - Do not ask visitors to click ads.
-- Keep About, Contact, Privacy, and calculator navigation visible.
-- After approval, paste the line AdSense gives you into `ads.txt` (it currently lists no authorized sellers), then enable ad units inside the existing `.ad-slot` placeholders.
+- Do not load ad code on 404, privacy, contact, about, methodology, or other low-content or dead-end pages.
+- Keep About, Contact, Privacy, methodology, source links, and calculator navigation visible.
+- Keep `ads.txt` synchronized with the publisher ID shown by AdSense.
+- Use a consent-management setup wherever Google or local law requires it before serving personalized ads.
 
 ## Assets already in place
 
-- `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png` (icons), `og-image.png` (1200x630 social preview), and a branded `404.html`.
-- The image sources live in `tools/asset-src/` and can be re-rendered if you change the branding.
+- `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`, `og-image.png`, and a branded `404.html`.
+- The image sources live in `tools/asset-src/` for local editing. Netlify routes `/tools/*` to a 404 so build assets are not public pages.

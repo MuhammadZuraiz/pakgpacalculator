@@ -21,9 +21,6 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7400673079827279"
      crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     <script>
       (function () {
         try {
@@ -37,17 +34,17 @@
     </script>
     <link rel="stylesheet" href="../styles.css">
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@type":"WebApplication","name":"Semester GPA Calculator","applicationCategory":"EducationalApplication","operatingSystem":"Any","description":"Calculate semester GPA from course grades and credit hours using common Pakistan 4.0 grading scales.","url":"https://pakgpacalculator.netlify.app/semester-gpa-calculator/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+      {"@context":"https://schema.org","@type":"WebApplication","name":"Semester GPA Calculator","applicationCategory":"EducationalApplication","operatingSystem":"Any","description":"Calculate semester GPA from course grades and credit hours using common Pakistan 4.0 grading scales.","url":"https://pakgpacalculator.netlify.app/semester-gpa-calculator/","dateModified":"2026-08-12","author":{"@type":"Organization","name":"GPA Calculator Pakistan","url":"https://pakgpacalculator.netlify.app"},"publisher":{"@type":"Organization","name":"GPA Calculator Pakistan","url":"https://pakgpacalculator.netlify.app"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
     </script>
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I ignore previous CGPA?","acceptedAnswer":{"@type":"Answer","text":"Yes. Leave previous CGPA and completed credits blank to calculate only this semester's GPA."}},{"@type":"Question","name":"Can I add labs separately?","acceptedAnswer":{"@type":"Answer","text":"Yes. Add a lab as a separate row if your transcript gives it separate credit hours and a separate grade."}},{"@type":"Question","name":"Can failed courses be counted?","acceptedAnswer":{"@type":"Answer","text":"Yes. Enter F with the correct credit hours if your university counts the failed course in GPA. F usually contributes 0 grade points."}},{"@type":"Question","name":"Which grade scale should I pick?","acceptedAnswer":{"@type":"Answer","text":"Use the scale shown on your result card. Choose the no-minus scale (A, B+, B) for NUST or IIUI style, and the HEC scale (with A-, B-, C-) for COMSATS, FAST, and similar universities."}},{"@type":"Question","name":"Why is my semester GPA slightly different from the portal?","acceptedAnswer":{"@type":"Answer","text":"Differences usually come from rounding, relative grading, or a department-specific grade-point table. Match the scale and credit hours carefully before comparing."}}]}
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does this page use my previous CGPA?","acceptedAnswer":{"@type":"Answer","text":"No. This focused calculator uses only the letter grades and credit hours from the semester you enter."}},{"@type":"Question","name":"Can I add labs separately?","acceptedAnswer":{"@type":"Answer","text":"Yes. Add a lab as a separate row if your transcript gives it separate credit hours and a separate grade."}},{"@type":"Question","name":"Can failed courses be counted?","acceptedAnswer":{"@type":"Answer","text":"Yes. Enter F with the correct credit hours if your university counts the failed course in GPA. F usually contributes 0 grade points."}},{"@type":"Question","name":"Which grade scale should I pick?","acceptedAnswer":{"@type":"Answer","text":"Use the source-reviewed university page when available. Otherwise choose the common preset closest to your transcript and verify each point value; similarly named scales can differ by 0.01 or more."}},{"@type":"Question","name":"Why is my semester GPA slightly different from the portal?","acceptedAnswer":{"@type":"Answer","text":"Differences usually come from rounding, relative grading, or a department-specific grade-point table. Match the scale and credit hours carefully before comparing."}}]}
     </script>
   </head>
   <body data-page-type="calculator" data-page-slug="semester-gpa-calculator">
     <a class="skip-link" href="#calculator">Skip to main content</a>
     <header class="site-header">
       <nav class="nav-shell" aria-label="Main navigation">
-        <a class="brand" href="../index.html" aria-label="GPA Calculator Pakistan home">
+        <a class="brand" href="/" aria-label="GPA Calculator Pakistan home">
           <span class="brand-mark" aria-hidden="true">4.0</span>
           <span>GPA Calculator Pakistan</span>
         </a>
@@ -58,13 +55,14 @@
         </button>
         <div class="nav-actions" id="primary-nav">
           <div class="nav-links">
-            <a href="../index.html#calculator">Calculator</a>
-            <a href="../index.html#tools">Tools</a>
-            <a href="../index.html#universities">Universities</a>
-            <a href="../index.html#guide">Guide</a>
-            <a href="../about.html">About</a>
-            <a href="../contact.html">Contact</a>
-            <a href="../privacy.html">Privacy</a>
+            <a href="/#calculator">Calculator</a>
+            <a href="/#tools">Tools</a>
+            <a href="/#universities">Universities</a>
+            <a href="/#guide">Guide</a>
+            <a href="/methodology.html">Sources</a>
+            <a href="/about.html">About</a>
+            <a href="/contact.html">Contact</a>
+            <a href="/privacy.html">Privacy</a>
           </div>
           <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme">
             <span class="theme-toggle__icon" aria-hidden="true">D</span>
@@ -87,22 +85,22 @@
         <aside class="quick-stats" aria-label="Page highlights">
           <div><strong>4.0</strong><span>scale focus</span></div>
           <div><strong>30</strong><span>course rows</span></div>
-          <div><strong>Free</strong><span>student tool</span></div>
+          <div><strong>Free</strong><span>no signup</span></div>
         </aside>
       </section>
       <section class="calculator-section" id="calculator" aria-labelledby="calculator-title" data-animate>
         <div class="section-heading">
           <p class="eyebrow">Start calculating</p>
           <h2 id="calculator-title">Current semester GPA calculator</h2>
-          <p>Leave previous CGPA fields empty if you only want the current semester GPA.</p>
+          <p>Enter only this semester's awarded letter grades and exact credit hours. This focused view does not combine an earlier CGPA.</p>
         </div>
-        <form class="calculator-shell" id="gpa-form" novalidate data-animate data-default-scale="pakistan">
+        <form class="calculator-shell" id="gpa-form" novalidate data-animate data-default-scale="pakistan" data-calculation-mode="semester">
           <div class="toolbar">
             <div>
               <label for="scale-select">Grade scale</label>
               <select id="scale-select" name="scale">
-                <option value="pakistan">Pakistan 4.0 scale (no minus grades)</option>
-                <option value="hec">HEC 4.0 scale (with minus grades)</option>
+                <option value="pakistan">Common 4.0 scale (no minus grades)</option>
+                <option value="hec">Common 4.0 scale (with minus grades)</option>
               </select>
             </div>
             <div class="toolbar-actions">
@@ -113,15 +111,15 @@
           </div>
           <div class="calculator-grid">
             <div class="entry-panel">
-              <div class="previous-grid">
+              <div hidden>
                 <div>
                   <label for="previous-cgpa">Previous CGPA</label>
                   <input id="previous-cgpa" name="previousCgpa" type="number" min="0" max="4" step="0.01" inputmode="decimal" placeholder="3.20">
                 </div>
                 <div>
-                  <label for="completed-credits">Completed credit hours</label>
-                  <input id="completed-credits" name="completedCredits" type="number" min="0" step="1" inputmode="numeric" placeholder="60" aria-describedby="completed-help">
-                  <small id="completed-help">Credits completed before this semester.</small>
+                  <label for="completed-credits">Credits behind previous CGPA</label>
+                  <input id="completed-credits" name="completedCredits" type="number" min="0" step="0.5" inputmode="decimal" placeholder="60" aria-describedby="completed-help">
+                  <small id="completed-help">Prior credits your transcript used for that CGPA; exclude this semester.</small>
                 </div>
               </div>
               <div class="course-table-wrap">
@@ -133,7 +131,7 @@
                       <th scope="col">Subject</th>
                       <th scope="col">Grade</th>
                       <th scope="col">Credits</th>
-                      <th scope="col">Points</th>
+                      <th scope="col">Quality points</th>
                       <th scope="col"><span class="sr-only">Actions</span></th>
                     </tr>
                   </thead>
@@ -148,27 +146,25 @@
             <aside class="result-panel" aria-labelledby="results-title">
               <p class="eyebrow">Live result</p>
               <h3 id="results-title">Your GPA summary</h3>
-              <div class="score-pair">
+              <div class="score-pair score-pair-single">
                 <div><span>Semester GPA</span><strong id="semester-gpa">0.00</strong></div>
-                <div><span>Updated CGPA</span><strong id="updated-cgpa">0.00</strong></div>
+                <div hidden><span>Updated CGPA</span><strong id="updated-cgpa">&mdash;</strong></div>
               </div>
               <dl class="result-list">
                 <div><dt>Semester credits</dt><dd id="semester-credits">0</dd></div>
-                <div><dt>Grade points</dt><dd id="total-points">0.00</dd></div>
+                <div><dt>Total quality points</dt><dd id="total-points">0.00</dd></div>
                 <div><dt>Courses counted</dt><dd id="courses-counted">0</dd></div>
-                <div><dt>Standing</dt><dd id="standing">Add courses</dd></div>
+                <div><dt>GPA band</dt><dd id="standing">&mdash;</dd></div>
               </dl>
               <div class="formula-box">
-                <strong>CGPA formula</strong>
-                <p>((previous CGPA x completed credits) + current points) / total credits</p>
+                <strong>Semester GPA formula</strong>
+                <p>total quality points / semester credit hours</p>
               </div>
               <p class="status-message" id="status-message" role="status" aria-live="polite">Select grades and credit hours to calculate your GPA.</p>
             </aside>
           </div>
         </form>
-        <div class="ad-slot ad-slot-top" aria-label="Advertisement placeholder">
-          <span>Advertisement</span>
-        </div>
+
       </section>
       <section class="content-band" aria-labelledby="guide-title" data-animate>
         <div class="article-grid">
@@ -185,39 +181,36 @@
           <article class="content-card">
             <h2>Reading your result card</h2>
             <p>Most Pakistan result cards list each course with its credit hours, letter grade, and grade points. Match those exact values in the calculator, including lab courses that carry their own separate credit.</p>
-            <p>If your university uses minus grades (A-, B-, C-), switch to the HEC scale in the calculator so the grade points line up with your transcript.</p>
+            <p>The two common presets are only starting points. If your university has a source-reviewed page on this site, use that page's exact preset; otherwise compare every grade point with your own transcript key.</p>
           </article>
           <aside class="disclaimer-box">
             <strong>Unofficial estimate</strong>
             <p>This website is independent and not affiliated with any university. Always use your official transcript, examination office, or department policy for final GPA and CGPA decisions.</p>
           </aside>
         </div>
+        <aside class="source-card source-card-list" aria-labelledby="page-sources-title">
+          <div>
+            <p class="eyebrow">References</p>
+            <h2 id="page-sources-title">Sources and method</h2>
+            <p>Reviewed on <time datetime="2026-08-12">12 August 2026</time>. These links support the policy context; the calculator remains an independent planning tool.</p>
+          </div>
+          <ul>
+              <li><a href="https://www.hec.gov.pk/english/services/universities/Documents/Final%20Examination%20Policy%20Guidelines.pdf" rel="external">HEC examination policy guidelines</a><span>General semester assessment and GPA/CGPA context</span></li>
+              <li><a href="/methodology.html">Editorial methodology for this calculator</a><span>Formula, calculator tests, and limitations</span></li>
+          </ul>
+        </aside>
       </section>
-      <div class="ad-slot ad-slot-middle" aria-label="Advertisement placeholder">
-          <span>Advertisement</span>
-        </div>
       <section class="content-band" aria-labelledby="related-title" data-animate>
         <div class="section-heading">
           <p class="eyebrow">Related tools</p>
           <h2 id="related-title">Keep exploring GPA calculators</h2>
-          <p>Move between the main calculator, focused student guides, and university-specific estimate pages.</p>
+          <p>Continue with the most relevant calculator or explainer. The full source-reviewed university list is on the homepage.</p>
         </div>
         <div class="link-grid">
-          <a class="link-card" href="../cgpa-calculator-pakistan/index.html">CGPA Calculator Pakistan</a>
-          <a class="link-card" href="../semester-gpa-calculator/index.html">Semester GPA Calculator</a>
-          <a class="link-card" href="../gpa-to-percentage-pakistan/index.html">GPA to Percentage Pakistan</a>
-          <a class="link-card" href="../credit-hours-calculator/index.html">Credit Hours Calculator</a>
-        </div>
-        <div class="link-grid link-grid-compact">
-          <a class="link-card" href="../nust-gpa-calculator/index.html">NUST GPA Calculator</a>
-          <a class="link-card" href="../fast-gpa-calculator/index.html">FAST GPA Calculator</a>
-          <a class="link-card" href="../comsats-gpa-calculator/index.html">COMSATS GPA Calculator</a>
-          <a class="link-card" href="../iiui-gpa-calculator/index.html">IIUI GPA Calculator</a>
-          <a class="link-card" href="../giki-gpa-calculator/index.html">GIKI GPA Calculator</a>
-          <a class="link-card" href="../pieas-gpa-calculator/index.html">PIEAS GPA Calculator</a>
-          <a class="link-card" href="../air-university-gpa-calculator/index.html">Air University GPA Calculator</a>
-          <a class="link-card" href="../uet-gpa-calculator/index.html">UET GPA Calculator</a>
-          <a class="link-card" href="../ist-gpa-calculator/index.html">IST GPA Calculator</a>
+          <a class="link-card" href="/"><strong>Main GPA & CGPA calculator</strong><span>Compare either common scale and plan an updated CGPA.</span></a>
+          <a class="link-card" href="/methodology.html"><strong>Calculation method & sources</strong><span>Check the formula, source register, tests, and limitations.</span></a>
+          <a class="link-card" href="/credit-hours-calculator/"><strong>Credit-hours guide</strong><span>Understand quality points, labs, and weighted course loads.</span></a>
+          <a class="link-card" href="/gpa-to-percentage-pakistan/"><strong>GPA-to-percentage guide</strong><span>Avoid unsupported one-size-fits-all conversions.</span></a>
         </div>
       </section>
       <section class="faq-section" id="faq" aria-labelledby="faq-title" data-animate>
@@ -226,16 +219,13 @@
           <h2 id="faq-title">Semester GPA Calculator FAQ</h2>
         </div>
         <div class="faq-list">
-          <details><summary>Can I ignore previous CGPA?</summary><p>Yes. Leave previous CGPA and completed credits blank to calculate only this semester's GPA.</p></details>
+          <details><summary>Does this page use my previous CGPA?</summary><p>No. This focused calculator uses only the letter grades and credit hours from the semester you enter.</p></details>
           <details><summary>Can I add labs separately?</summary><p>Yes. Add a lab as a separate row if your transcript gives it separate credit hours and a separate grade.</p></details>
           <details><summary>Can failed courses be counted?</summary><p>Yes. Enter F with the correct credit hours if your university counts the failed course in GPA. F usually contributes 0 grade points.</p></details>
-          <details><summary>Which grade scale should I pick?</summary><p>Use the scale shown on your result card. Choose the no-minus scale (A, B+, B) for NUST or IIUI style, and the HEC scale (with A-, B-, C-) for COMSATS, FAST, and similar universities.</p></details>
+          <details><summary>Which grade scale should I pick?</summary><p>Use the source-reviewed university page when available. Otherwise choose the common preset closest to your transcript and verify each point value; similarly named scales can differ by 0.01 or more.</p></details>
           <details><summary>Why is my semester GPA slightly different from the portal?</summary><p>Differences usually come from rounding, relative grading, or a department-specific grade-point table. Match the scale and credit hours carefully before comparing.</p></details>
         </div>
       </section>
-      <div class="ad-slot ad-slot-lower" aria-label="Advertisement placeholder">
-          <span>Advertisement</span>
-        </div>
     </main>
     <footer class="site-footer">
       <div>
@@ -243,12 +233,13 @@
         <p>Unofficial GPA and CGPA tools for students.</p>
       </div>
       <div class="footer-links">
-        <a href="../index.html#calculator">Calculator</a>
-        <a href="../index.html#tools">Tools</a>
-        <a href="../index.html#universities">Universities</a>
-        <a href="../about.html">About</a>
-        <a href="../contact.html">Contact</a>
-        <a href="../privacy.html">Privacy Policy</a>
+        <a href="/#calculator">Calculator</a>
+        <a href="/#tools">Tools</a>
+        <a href="/#universities">Universities</a>
+        <a href="/methodology.html">Methodology &amp; sources</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy Policy</a>
       </div>
     </footer>
     <script src="../script.js"></script>
